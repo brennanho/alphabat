@@ -21,7 +21,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const PlayersList = ({ players, onRemovePlayer, style = {} }) => {
+const PlayersList = ({
+  players,
+  onRemovePlayer = (playerName) => null,
+  withRemoveButton = false,
+  style = {},
+}) => {
   return (
     <View style={style}>
       <FlatList
@@ -33,9 +38,11 @@ const PlayersList = ({ players, onRemovePlayer, style = {} }) => {
           return (
             <View style={styles.playerWrapper}>
               <Text style={styles.playerText}>{playerName}</Text>
-              <TouchableHighlight onPress={handlePress}>
-                <Text style={styles.cancelText}>✕</Text>
-              </TouchableHighlight>
+              {withRemoveButton && (
+                <TouchableHighlight onPress={handlePress}>
+                  <Text style={styles.cancelText}>✕</Text>
+                </TouchableHighlight>
+              )}
             </View>
           );
         }}

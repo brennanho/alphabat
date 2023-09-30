@@ -43,7 +43,7 @@ const PlayerInput = ({ onAddPlayer }) => {
   };
 
   const handleAddName = () => {
-    onAddPlayer(text);
+    if (text) onAddPlayer(text);
   };
 
   return (

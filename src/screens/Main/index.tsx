@@ -16,7 +16,7 @@ const Main = ({ navigation }) => {
   const playerNames = Object.values(players).map(
     (player: Player) => player.name
   );
-  const startGameDisabled = playerNames.length === 0;
+  const startGameDisabled = playerNames.length <= 1;
 
   const handleAddPlayer = (playerName: string) => {
     addPlayer(playerName);
@@ -36,6 +36,7 @@ const Main = ({ navigation }) => {
       <PlayersList
         players={playerNames}
         onRemovePlayer={handleRemovePlayer}
+        withRemoveButton
         style={{ height: "50%" }}
       />
       <PlayerInput onAddPlayer={handleAddPlayer} />

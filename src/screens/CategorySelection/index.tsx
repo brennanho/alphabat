@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
 const CategorySelection = ({ navigation }) => {
   const { playerToChooseCategory, categories } = useContext(AppContext);
 
-  const handleCategoryPressed = () => {
-    navigation.navigate(SCREENS.GAME);
+  const handleCategoryPressed = (category) => {
+    navigation.navigate(SCREENS.GAME, { category });
   };
 
   return (
@@ -31,12 +31,12 @@ const CategorySelection = ({ navigation }) => {
         {categories
           .slice(0, NUMBER_OF_CATEGORIES_TO_SELECT)
           .map((category: string) => {
+            const handlePress = () => {
+              handleCategoryPressed(category);
+            };
+
             return (
-              <Button
-                key={category}
-                text={category}
-                onPress={handleCategoryPressed}
-              />
+              <Button key={category} text={category} onPress={handlePress} />
             );
           })}
       </View>
