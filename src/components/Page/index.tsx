@@ -1,8 +1,7 @@
-import { View, StyleSheet, StatusBar, Dimensions } from "react-native";
+import { SafeAreaView, StyleSheet, StatusBar, Dimensions } from "react-native";
 
 const styles = StyleSheet.create({
   page: {
-    // position: "relative",
     height: Dimensions.get("window").height,
     width: Dimensions.get("window").width,
     display: "flex",
@@ -14,7 +13,7 @@ const styles = StyleSheet.create({
 });
 
 const Page = ({ children }) => {
-  return <View style={styles.page}>{children}</View>;
+  return <SafeAreaView style={styles.page}>{children}</SafeAreaView>;
 };
 
 export default Page;

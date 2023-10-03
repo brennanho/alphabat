@@ -7,14 +7,14 @@ const styles = StyleSheet.create({
   board: {
     position: "absolute",
     padding: 8,
-    zIndex: 0,
+    zIndex: -1,
     width: "100%",
     height: "100%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
-    alignSelf: "flex-end",
+    alignSelf: "auto",
   },
   row: {
     height: "10%",
@@ -24,12 +24,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  letter: {
-    minWidth: 72,
-    width: "100%",
+  tile: {
+    minWidth: "17.5%",
     height: "100%",
-    alignSelf: "center",
-    backgroundColor: "white",
   },
 });
 
@@ -46,7 +43,7 @@ const Board = ({ tiles, contestableLetter, onTilePressed, style = {} }) => {
                 onTilePressed(letter);
               };
 
-              const getButtonStyles = () => {
+              const getTileStyles = () => {
                 const { pressed } = tiles[letter];
                 let backgroundColor = "white";
                 if (pressed) {
@@ -54,18 +51,19 @@ const Board = ({ tiles, contestableLetter, onTilePressed, style = {} }) => {
                     contestableLetter === letter ? "lightgreen" : "lightpink";
                 }
                 return letter
-                  ? { ...styles.letter, backgroundColor }
+                  ? { ...styles.tile, backgroundColor }
                   : { display: "none" };
               };
 
               return (
                 <Button
                   key={`${id}-${letter}-${letterIdx}`}
-                  text={letter}
-                  disabled={tiles[letter].pressed}
+                  disabled={tiles[letter].pressed && contestableLetter !== letter}
                   onPress={handleLetterPressed}
-                  style={getButtonStyles()}
-                />
+                  style={getTileStyles()}
+                >
+                  {letter}
+                </Button>
               );
             })}
           </View>

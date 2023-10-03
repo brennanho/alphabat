@@ -1,30 +1,35 @@
 import { TouchableHighlight, StyleSheet, Text } from "react-native";
+import { STYLES } from "@src/constants";
 
 const styles = StyleSheet.create({
   button: {
-    textAlign: "center",
-    textAlignVertical: "center",
-    fontSize: 32,
-    paddingTop: 12,
-    paddingBottom: 12,
-    paddingLeft: 20,
-    paddingRight: 20,
-    elevation: 5,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "white",
+    height: "100%",
   },
 });
 
-const Button = ({ onPress, text, disabled = false, style = {}, ...props }) => {
+const Button = ({
+  onPress,
+  disabled = false,
+  children,
+  style = {},
+  fontSize = 32,
+  elevation = true,
+}) => {
   return (
-    <TouchableHighlight onPress={onPress} disabled={disabled} {...props}>
-      <Text
-        style={{
-          ...styles.button,
-          ...style,
-        }}
-      >
-        {text}
-      </Text>
+    <TouchableHighlight
+      onPress={onPress}
+      disabled={disabled}
+      style={{
+        ...styles.button,
+        ...style,
+        ...(elevation ? STYLES.ELEVATION : {}),
+      }}
+    >
+      <Text style={{ fontSize }}>{children}</Text>
     </TouchableHighlight>
   );
 };

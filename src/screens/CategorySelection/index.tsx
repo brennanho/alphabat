@@ -7,18 +7,23 @@ import { NUMBER_OF_CATEGORIES_TO_SELECT, SCREENS } from "@src/constants";
 const styles = StyleSheet.create({
   playerToChooseCategory: {
     fontSize: 32,
+    marginBottom: 128
   },
   categories: {
     display: "flex",
     flexDirection: "column",
-    gap: 32,
+    width: "50%",
+    gap: 16,
   },
+  category: {
+    height: 64,
+  }
 });
 
 const CategorySelection = ({ navigation }) => {
   const { playerToChooseCategory, categories } = useContext(AppContext);
 
-  const handleCategoryPressed = (category) => {
+  const handleCategoryPressed = (category: string) => {
     navigation.navigate(SCREENS.GAME, { category });
   };
 
@@ -36,7 +41,7 @@ const CategorySelection = ({ navigation }) => {
             };
 
             return (
-              <Button key={category} text={category} onPress={handlePress} />
+              <Button key={category} style={styles.category} onPress={handlePress}>{category}</Button>
             );
           })}
       </View>

@@ -3,21 +3,19 @@ import {
   StyleSheet,
   View,
   TextInput,
-  Text,
-  TouchableHighlight,
 } from "react-native";
+import { Button } from '@src/components';
+import { STYLES } from "@src/constants";
 
 const styles = StyleSheet.create({
   container: {
-    height: 60,
-    width: "80%",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
     paddingLeft: 12,
-    elevation: 5,
     backgroundColor: "white",
+    ...STYLES.ELEVATION
   },
   input: {
     width: "75%",
@@ -29,13 +27,15 @@ const styles = StyleSheet.create({
     height: "100%",
     textAlignVertical: "center",
     marginLeft: "auto",
-    fontSize: 32,
     paddingLeft: 20,
     paddingRight: 20,
   },
+  buttonAddText: {
+    fontSize: 32,
+  }
 });
 
-const PlayerInput = ({ onAddPlayer }) => {
+const PlayerInput = ({ onAddPlayer, style = {} }) => {
   const [text, setText] = useState("");
 
   const handleChangeText = (updatedText: string) => {
@@ -47,16 +47,16 @@ const PlayerInput = ({ onAddPlayer }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, ...style}}>
       <TextInput
         onChangeText={handleChangeText}
         value={text}
         style={styles.input}
         autoCapitalize="characters"
       />
-      <TouchableHighlight onPress={handleAddName}>
-        <Text style={styles.buttonAdd}>+</Text>
-      </TouchableHighlight>
+      <Button style={styles.buttonAdd} onPress={handleAddName} elevation={false}>
+        +
+      </Button>
     </View>
   );
 };

@@ -1,4 +1,4 @@
-export const INITIAL_GAME_STATE = {
+export const INITIAL_BOARD_STATE = {
   tiles: {
     A: { pressed: false },
     B: { pressed: false },
@@ -26,5 +26,8 @@ export const INITIAL_GAME_STATE = {
     M: { pressed: false },
     "": { pressed: false },
   },
+  tilesPressed: 0,
   contestableLetter: "",
 };
+
+export const TIMEOUT = 3;

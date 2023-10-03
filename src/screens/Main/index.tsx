@@ -1,4 +1,4 @@
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import { useContext } from "react";
 import { Page, PlayerInput, PlayersList, Button } from "@src/components";
 import { AppContext } from "@src/store";
@@ -9,14 +9,27 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 64,
   },
+  menu: {
+    display: "flex",
+    flexDirection: "column",
+    width: "80%",
+    marginTop: 64,
+    gap: 16,
+  },
+  players: {
+    height: 300,
+  },
+  playerInput: {
+    height: 64,
+  },
+  startGame: {
+    height: 64,
+  },
 });
 
 const Main = ({ navigation }) => {
   const { players, addPlayer, removePlayer } = useContext(AppContext);
-  const playerNames = Object.values(players).map(
-    (player: Player) => player.name
-  );
-  const startGameDisabled = playerNames.length <= 1;
+  const startGameDisabled = Object.keys(players).length <= 1;
 
   const handleAddPlayer = (playerName: string) => {
     addPlayer(playerName);
@@ -32,19 +45,22 @@ const Main = ({ navigation }) => {
 
   return (
     <Page>
-      <Text style={styles.header}>Alphabattle</Text>
-      <PlayersList
-        players={playerNames}
-        onRemovePlayer={handleRemovePlayer}
-        withRemoveButton
-        style={{ height: "50%" }}
-      />
-      <PlayerInput onAddPlayer={handleAddPlayer} />
-      <Button
-        onPress={handleNavigation}
-        text="START GAME"
-        disabled={startGameDisabled}
-      />
+      <Text style={styles.header}>Arrrphabet</Text>
+      <View style={styles.menu}>
+        <PlayersList
+          players={players}
+          onRemovePlayer={handleRemovePlayer}
+          style={styles.players}
+        />
+        <PlayerInput style={styles.playerInput} onAddPlayer={handleAddPlayer} />
+        <Button
+          style={styles.startGame}
+          disabled={startGameDisabled}
+          onPress={handleNavigation}
+        >
+          START GAME
+        </Button>
+      </View>
     </Page>
   );
 };
