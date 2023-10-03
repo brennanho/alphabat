@@ -29,7 +29,7 @@ const appReducer = (state, action) => {
       updatedPlayers[playerNameToAdd] = {
         score: 0,
         name: playerNameToAdd,
-        icon: state._internal.icons.characters.pop(),
+        // icon: state._internal.icons.characters.pop(),
       };
       return {
         ...state,
@@ -38,8 +38,8 @@ const appReducer = (state, action) => {
       };
     case APP_CONTEXT.ACTIONS.REMOVE_PLAYER:
       const playerNameToRemove = action.payload;
-      const iconToPutBack = updatedPlayers[playerNameToRemove].icon;
-      state._internal.icons.characters.push(iconToPutBack);
+      // const iconToPutBack = updatedPlayers[playerNameToRemove].icon;
+      // state._internal.icons.characters.push(iconToPutBack);
       delete updatedPlayers[playerNameToRemove];
       return { ...state, players: updatedPlayers };
     case APP_CONTEXT.ACTIONS.SET_NEXT_ROUND:

@@ -1,23 +1,23 @@
-import { View, ScrollView, FlatList, Text, StyleSheet, Image } from "react-native";
+import {
+  View,
+  ScrollView,
+  FlatList,
+  Text,
+  StyleSheet,
+  Image,
+} from "react-native";
+import { ICONS } from "@assets/index";
 import { Button } from "@src/components";
 import { Player } from "@src/types";
 import { STYLES } from "@src/constants";
 
 const styles = StyleSheet.create({
-  playerWrapper: {
+  iconWrapper: {
+    // width: 300,
+    height: 400,
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
-    // backgroundColor: "green",
-  },
-  playerText: {
-    fontSize: 16,
-  },
-  cancelButton: {
-    height: 32,
-    // width: 16,
-    // padding: 8,
-    backgroundColor: "transparent"
+    position: "absolute",
   },
 });
 
@@ -27,41 +27,30 @@ const PlayersList = ({
   style = {},
 }) => {
   return (
-    <View style={style}>
-      {Object.values(players).map((player: Player) => {
+    <View style={{ ...style, position: "relative", ...STYLES.ELEVATION }}>
+      <View style={styles.iconWrapper}>
+        <Image
+          source={require('../../../assets/Arrphabets.png')}
+          resizeMode="stretch"
+          style={{ width: "100%", height: "100%" }}
+        />
+      </View>
+      {Object.values(players).map((player: Player, index: number) => {
         const handlePress = () => onRemovePlayer(player.name);
         return (
-          <View style={styles.playerWrapper}>
-            <View style={{ display: "flex", flexDirection: "row", height: "100%", ...STYLES.ELEVATION }}>
-              <View
-                style={{
-                  width: 80,
-                  height: 80,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  ...STYLES.ELEVATION,
-                }}
-              >
-                <Image
-                  source={player.icon}
-                  style={{
-                    width: "75%",
-                    height: "75%",
-                    resizeMode: "stretch",
-                  }}
-                />
-                <Text style={styles.playerText}>{player.name}</Text>
-              </View>
-              <Button
+          <View style={styles.iconWrapper}>
+            {/* <Button
                 style={styles.cancelButton}
                 onPress={handlePress}
                 fontSize={16}
               >
                 ✕
-              </Button>
-            </View>
+              </Button> */}
+            <Image
+              source={ICONS.CHARACTERS.ACTIVE[index]}
+              resizeMode="stretch"
+              style={{ width: "100%", height: "100%" }}
+            />
           </View>
         );
       })}

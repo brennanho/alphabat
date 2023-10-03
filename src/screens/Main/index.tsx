@@ -12,12 +12,12 @@ const styles = StyleSheet.create({
   menu: {
     display: "flex",
     flexDirection: "column",
-    width: "80%",
+    width: "100%",
     marginTop: 64,
     gap: 16,
   },
   players: {
-    height: 300,
+    height: 400,
   },
   playerInput: {
     height: 64,
