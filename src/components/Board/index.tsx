@@ -1,4 +1,4 @@
-import { useId } from "react";
+import React, { useId } from "react";
 import { StyleSheet, View } from "react-native";
 import { Button } from "@src/components";
 import { BOARD } from "./constants";

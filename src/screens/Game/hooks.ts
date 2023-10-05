@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTimer } from "react-timer-hook";
 import { INITIAL_BOARD_STATE, TIMEOUT } from "./constants";
+import { Player } from "@src/types";
 
 function getStartTime(seconds: number) {
   const time = new Date();
@@ -57,13 +58,13 @@ const useCountdown = (countdownSeconds: number, onExpire) => {
 };
 
 export const useGame = (
-  playerNames: string[],
+  players: Map<string, Player>,
   onRoundOver = (playerName) => null
 ) => {
   const [gameState, setGameState] = useState({
     ...INITIAL_BOARD_STATE,
-    players: playerNames.map((playerName: string) => {
-      return { name: playerName, alive: true };
+    players: Array.from(players).map(([, player]) => {
+      return { name: player.name, alive: true, icon: player.icon };
     }),
     turnIndex: 0,
     paused: false,

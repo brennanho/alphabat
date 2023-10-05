@@ -1,3 +1,4 @@
+import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -18,8 +19,13 @@ export default function App() {
     <NavigationContainer>
       <StatusBar style="auto" />
       <AppContextProvider>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name={SCREENS.MAIN} component={Main} />
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            gestureDirection: "vertical",
+          }}
+        >
+          <Stack.Screen name={SCREENS.MAIN} component={Main} options={options} />
           <Stack.Screen
             name={SCREENS.CATEGORY_SELECTION}
             component={CategorySelection}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -36,23 +36,25 @@ const styles = StyleSheet.create({
 });
 
 const PlayerInput = ({ onAddPlayer, style = {} }) => {
-  const [text, setText] = useState("");
+  const [playerName, setPlayerName] = useState("");
 
   const handleChangeText = (updatedText: string) => {
-    setText(updatedText);
+    setPlayerName(updatedText);
   };
 
   const handleAddName = () => {
-    if (text) onAddPlayer(text);
+    if (playerName) onAddPlayer(playerName);
   };
 
   return (
     <View style={{...styles.container, ...style}}>
       <TextInput
         onChangeText={handleChangeText}
-        value={text}
+        value={playerName}
         style={styles.input}
         autoCapitalize="characters"
+        autoCorrect={false}
+        maxLength={10}
       />
       <Button style={styles.buttonAdd} onPress={handleAddName} elevation={false}>
         +

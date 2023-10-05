@@ -1,4 +1,5 @@
-import { TouchableHighlight, StyleSheet, Text } from "react-native";
+import React from 'react';
+import { Pressable, StyleSheet, Text } from "react-native";
 import { STYLES } from "@src/constants";
 
 const styles = StyleSheet.create({
@@ -20,7 +21,7 @@ const Button = ({
   elevation = true,
 }) => {
   return (
-    <TouchableHighlight
+    <Pressable
       onPress={onPress}
       disabled={disabled}
       style={{
@@ -30,7 +31,7 @@ const Button = ({
       }}
     >
       <Text style={{ fontSize }}>{children}</Text>
-    </TouchableHighlight>
+    </Pressable>
   );
 };
 
