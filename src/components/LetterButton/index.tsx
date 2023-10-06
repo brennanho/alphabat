@@ -10,6 +10,7 @@ import Animated, {
   withSequence,
 } from "react-native-reanimated";
 import { STYLES } from "@src/constants";
+import { FONTS } from "@assets/index";
 
 const styles = StyleSheet.create({
   button: {
@@ -29,6 +30,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
+    fontFamily: FONTS.BOLD.NAME
   },
 });
 
@@ -37,7 +39,7 @@ const LetterButton = ({
   disabled = false,
   children,
   style = {},
-  fontSize = 32,
+  fontSize = 36,
   backgroundImageSource,
 }) => {
   const opacity = useSharedValue(1);
@@ -50,7 +52,7 @@ const LetterButton = ({
       }),
       withTiming(1, {
         duration: 500,
-        easing: Easing.inOut(Easing.ease),
+        easing: Easing.in(Easing.ease),
       })
     );
     onPress();

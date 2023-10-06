@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@src/components";
 import { STYLES } from "@src/constants";
 import { StyleSheet, Modal, SafeAreaView, View, Text } from "react-native";
+import { FONTS } from "@assets/index";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +20,11 @@ const styles = StyleSheet.create({
   options: {
     height: "25%",
     marginTop: 32,
+    gap: 16
   },
+  message: {
+    fontFamily: FONTS.BOLD.NAME
+  }
 });
 
 const ChallengeModal = ({
@@ -32,7 +37,7 @@ const ChallengeModal = ({
     <Modal visible={visible} animationType="slide" transparent>
       <SafeAreaView style={styles.container}>
         <View style={styles.content}>
-          <Text>
+          <Text style={styles.message}>
             Allow {playerName}'s answer? If you select DENY, {playerName} will
             be eliminated from this round.
           </Text>

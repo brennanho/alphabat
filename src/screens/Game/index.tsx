@@ -1,22 +1,30 @@
-import React, { useContext } from "react";
-import { StyleSheet, Text, Modal, View, SafeAreaView } from "react-native";
-import { Page, Board, Button, PlayersInGame } from "@src/components";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { Page, Board, PlayersInGame, ChallengeModal } from "@src/components";
 import { AppContext } from "@src/store";
 import { useGame } from "./hooks";
-import { SCREENS, STYLES } from "@src/constants";
-import ChallengeModal from "@src/components/ChallengeModal";
+import { SCREENS } from "@src/constants";
+import { ANIMATIONS, FONTS } from "@assets/index";
+import { ResizeMode, Video } from "expo-av";
 
 const styles = StyleSheet.create({
   category: {
-    fontSize: 32,
+    fontSize: 36,
+    fontFamily: FONTS.BOLD.NAME,
   },
   innerBoard: {
+    position: "relative",
     display: "flex",
     flexDirection: "column",
     width: "50%",
     height: "70%",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  timer: {
+    width: "100%",
+    height: "100%",
+    flex: 1,
   },
 });
 
@@ -37,6 +45,16 @@ const Game = ({
     playerToAct,
     playerToContest,
   } = useGame(playerMap, handleRoundOver);
+  const videoRef = useRef(null);
+  const [videoStatus, setVideoStatus] = useState({});
+
+  useEffect(() => {
+    videoRef.current.playFromPositionAsync(0);
+  }, [playerToAct]);
+
+  useEffect(() => {
+    console.log(videoStatus);
+  }, [videoStatus]);
 
   function handleLetterPressed(letter: string) {
     pressLetterTile(letter);
@@ -65,9 +83,27 @@ const Game = ({
       />
       <View style={styles.innerBoard}>
         <Text style={styles.category}>{category}</Text>
-        <PlayersInGame players={players} playerToAct={playerToAct} />
-        <Text>{seconds}</Text>
-        <ChallengeModal visible={paused} playerName={playerToContest.name} onAllowPressed={handleAllowPressed} onDeniedPressed={handleDeniedPressed}/>
+        <View style={{ display: "flex", flexDirection: "row", flex: 1 }}>
+          <View>
+            <PlayersInGame players={players} playerToAct={playerToAct} />
+            <Text>{seconds}</Text>
+          </View>
+          <Video
+            ref={videoRef}
+            style={styles.timer}
+            source={ANIMATIONS.TIMER}
+            resizeMode={ResizeMode.CONTAIN}
+            shouldPlay={!paused}
+            isLooping
+            onPlaybackStatusUpdate={(status) => setVideoStatus(status)}
+          />
+        </View>
+        <ChallengeModal
+          visible={paused}
+          playerName={playerToContest.name}
+          onAllowPressed={handleAllowPressed}
+          onDeniedPressed={handleDeniedPressed}
+        />
       </View>
     </Page>
   );

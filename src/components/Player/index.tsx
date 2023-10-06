@@ -1,3 +1,4 @@
+import { FONTS } from "@assets/index";
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
@@ -10,7 +11,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   playerIcon: { width: "100%", height: "50%" },
-  playerText: { fontSize: 32 },
+  playerText: { fontSize: 32, fontFamily: FONTS.BOLD.NAME },
 });
 
 const Player = ({ player, style = {}, textStyle = {} }) => {

@@ -3,10 +3,13 @@ import { Text, StyleSheet, View } from "react-native";
 import { Page, PlayerInput, PlayersInMain, Button } from "@src/components";
 import { AppContext } from "@src/store";
 import { SCREENS } from "@src/constants";
+import { FONTS } from "@assets/index";
 
 const styles = StyleSheet.create({
   header: {
     fontSize: 64,
+    fontFamily: FONTS.REGULAR.NAME,
+    marginBottom: 32,
   },
   menu: {
     display: "flex",
@@ -14,9 +17,6 @@ const styles = StyleSheet.create({
     height: "75%",
     width: "75%",
     gap: 16,
-  },
-  players: {
-    height: 520,
   },
   playerInput: {
     height: 64,
@@ -50,7 +50,6 @@ const Main = ({ navigation }) => {
           <PlayersInMain
             players={players}
             onRemovePlayer={handleRemovePlayer}
-            style={styles.players}
           />
           <PlayerInput
             style={styles.playerInput}

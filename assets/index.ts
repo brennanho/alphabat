@@ -25,4 +25,10 @@ export const IMAGES = {
 
 export const ANIMATIONS = {
   BACKGROUND_WAVES: require("./OceanWavesTestBG.mp4"),
+  TIMER: require("./BombPiecesHighrestTest.mp4"),
+};
+
+export const FONTS = {
+  REGULAR: { NAME: "alphabat", SOURCE: require("./Rimini-V6yy.otf") },
+  BOLD: { NAME: "alphabet-bold", SOURCE: require("./SimplyRoundedBold.ttf") },
 };

@@ -13,6 +13,7 @@ import Animated, {
   SlideInRight,
   SlideOutRight,
 } from "react-native-reanimated";
+import { FONTS } from "@assets/index";
 
 const styles = StyleSheet.create({
   players: {
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   playerIcon: { height: "100%", flex: 1, flexGrow: 2, alignSelf: "flex-start" },
-  playerText: { fontSize: 16 },
+  playerText: { fontSize: 16, fontFamily: FONTS.REGULAR.NAME },
   cancelButton: {
     height: 32,
     backgroundColor: "transparent",
@@ -48,7 +49,6 @@ const styles = StyleSheet.create({
 interface PlayersListProps {
   players: Map<string, Player>;
   onRemovePlayer: (playerName: string) => void;
-  style: Object;
 }
 
 const PlayersInMain = ({

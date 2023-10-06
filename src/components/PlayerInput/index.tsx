@@ -6,6 +6,7 @@ import {
 } from "react-native";
 import { Button } from '@src/components';
 import { STYLES } from "@src/constants";
+import { FONTS } from "@assets/index";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,6 +23,7 @@ const styles = StyleSheet.create({
     height: "100%",
     fontSize: 18,
     padding: 10,
+    fontFamily: FONTS.REGULAR.NAME
   },
   buttonAdd: {
     height: "100%",
@@ -32,6 +34,7 @@ const styles = StyleSheet.create({
   },
   buttonAddText: {
     fontSize: 32,
+    fontFamily: FONTS.BOLD.NAME
   }
 });
 

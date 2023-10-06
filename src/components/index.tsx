@@ -6,3 +6,4 @@ export { default as Player } from "./Player";
 export { default as PlayersInMain } from "./PlayersInMain";
 export { default as PlayersInGame } from "./PlayersInGame";
 export { default as LetterButton } from "./LetterButton";
+export { default as ChallengeModal } from "./ChallengeModal";

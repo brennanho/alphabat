@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text } from "react-native";
 import { STYLES } from "@src/constants";
+import { FONTS } from '@assets/index';
 
 const styles = StyleSheet.create({
   button: {
@@ -10,6 +11,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     height: "100%",
   },
+  text: {
+    fontFamily: FONTS.REGULAR.NAME
+  }
 });
 
 const Button = ({
@@ -30,7 +34,7 @@ const Button = ({
         ...(elevation ? STYLES.ELEVATION : {}),
       }}
     >
-      <Text style={{ fontSize }}>{children}</Text>
+      <Text style={{ ...styles.text, fontSize }}>{children}</Text>
     </Pressable>
   );
 };

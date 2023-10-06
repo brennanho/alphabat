@@ -3,10 +3,12 @@ import { StyleSheet, Text } from "react-native";
 import Animated, {
   RotateInDownRight,
   RotateOutDownRight,
+  BounceIn,
   JumpingTransition,
 } from "react-native-reanimated";
 import * as Animatable from "react-native-animatable";
 import { STYLES } from "@src/constants";
+import { FONTS } from "@assets/index";
 
 const styles = StyleSheet.create({
   players: {
@@ -23,9 +25,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     flex: 1,
+    gap: 4,
   },
   playerIcon: { height: "100%", width: "40%" },
-  playerText: { fontSize: 16 },
+  playerText: { fontSize: 16, fontFamily: FONTS.REGULAR.NAME },
 });
 
 const PlayersInGame = ({ players, playerToAct }) => {
@@ -40,7 +43,7 @@ const PlayersInGame = ({ players, playerToAct }) => {
             style={styles.player}
             key={player.name}
             layout={JumpingTransition.duration(1000)}
-            entering={RotateInDownRight.duration(1000)}
+            entering={BounceIn.duration(1000)}
             exiting={RotateOutDownRight.duration(1000)}
           >
             <Animatable.Image
