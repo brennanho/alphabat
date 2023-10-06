@@ -1,19 +1,17 @@
 import React from "react";
 import {
   View,
-  ScrollView,
   Text,
   StyleSheet,
   Image,
-  ImageBackground,
 } from "react-native";
 import { Button } from "@src/components";
 import { Player } from "@src/types";
 import { STYLES } from "@src/constants";
 import Animated, {
   JumpingTransition,
-  RotateInDownRight,
-  RotateOutDownRight,
+  SlideInRight,
+  SlideOutRight,
 } from "react-native-reanimated";
 
 const styles = StyleSheet.create({
@@ -58,20 +56,18 @@ const PlayersInMain = ({
   onRemovePlayer = (playerName) => null,
 }: PlayersListProps) => {
   return (
-    <Animated.View
-      layout={JumpingTransition.duration(1000)}
+    <View
       style={styles.players}
     >
       {Array.from(players).map(([, player]) => {
         const handlePress = () => onRemovePlayer(player.name);
-        console.log(player);
         return (
           <Animated.View
             style={styles.player}
             key={player.name}
-            layout={JumpingTransition.duration(1000)}
-            entering={RotateInDownRight.duration(1000)}
-            exiting={RotateOutDownRight.duration(1000)}
+            layout={JumpingTransition.duration(1000).delay(0)}
+            entering={SlideInRight.duration(1000)}
+            exiting={SlideOutRight.duration(1000)}
           >
             <Image
               style={styles.playerIcon}
@@ -91,7 +87,7 @@ const PlayersInMain = ({
           </Animated.View>
         );
       })}
-    </Animated.View>
+    </View>
   );
 };
 
