@@ -1,5 +1,14 @@
-import React from "react";
-import { Pressable, StyleSheet, Text, Image } from "react-native";
+import React, { memo, useCallback } from "react";
+import { Pressable, StyleSheet, Text } from "react-native";
+import Animated, {
+  BounceIn,
+  BounceOut,
+  useSharedValue,
+  withTiming,
+  Easing,
+  useAnimatedStyle,
+  withSequence,
+} from "react-native-reanimated";
 import { STYLES } from "@src/constants";
 
 const styles = StyleSheet.create({
@@ -31,9 +40,31 @@ const LetterButton = ({
   fontSize = 32,
   backgroundImageSource,
 }) => {
+  const opacity = useSharedValue(1);
+
+  const handlePress = () => {
+    opacity.value = withSequence(
+      withTiming(0, {
+        duration: 50,
+        easing: Easing.out(Easing.ease),
+      }),
+      withTiming(1, {
+        duration: 500,
+        easing: Easing.inOut(Easing.ease),
+      })
+    );
+    onPress();
+  };
+
+  const animatedStyles = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value,
+    };
+  }, [backgroundImageSource]);
+
   return (
     <Pressable
-      onPress={onPress}
+      onPressIn={handlePress}
       disabled={disabled}
       style={{
         ...styles.button,
@@ -41,14 +72,16 @@ const LetterButton = ({
         ...STYLES.ELEVATION,
       }}
     >
-      <Image
+      <Animated.Image
         source={backgroundImageSource}
-        style={styles.background}
+        style={[styles.background, animatedStyles]}
         resizeMode="center"
+        exiting={BounceOut}
+        entering={BounceIn}
       />
       <Text style={{ ...styles.text, fontSize }}>{children}</Text>
     </Pressable>
   );
 };
 
-export default LetterButton;
+export default memo(LetterButton);

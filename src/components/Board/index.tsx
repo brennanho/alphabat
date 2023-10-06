@@ -1,5 +1,5 @@
-import React, { useId } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useId, useCallback } from "react";
+import { StyleSheet, View, FlatList } from "react-native";
 import { LetterButton } from "@src/components";
 import { BOARD } from "./constants";
 import { IMAGES } from "@assets/index";
@@ -46,14 +46,10 @@ const Board = ({ tiles, contestableLetter, onTilePressed, style = {} }) => {
 
               const getTileBackgroundImageSource = () => {
                 const { pressed } = tiles[letter];
-                let backgroundImage = IMAGES.LETTER_BLOCK.DEFAULT;
-                if (pressed) {
-                  backgroundImage =
-                    letter === contestableLetter
-                      ? IMAGES.LETTER_BLOCK.CONTESTABLE
-                      : IMAGES.LETTER_BLOCK.PRESSED;
-                }
-                return backgroundImage;
+                if (!pressed) return IMAGES.LETTER_BLOCK.DEFAULT;
+                return letter === contestableLetter
+                  ? IMAGES.LETTER_BLOCK.CONTESTABLE
+                  : IMAGES.LETTER_BLOCK.PRESSED;
               };
 
               const getTileStyles = () =>
