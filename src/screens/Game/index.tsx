@@ -18,23 +18,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  players: {
-    width: "100%",
-    paddingTop: 32,
-    paddingBottom: 32,
-    flex: 1,
-    ...STYLES.ELEVATION,
-  },
-  player: {
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    flex: 1,
-  },
-  playerIcon: { height: "100%", width: "40%" },
-  playerText: { fontSize: 16 },
 });
 
 const Game = ({

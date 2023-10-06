@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Text, StyleSheet, View } from "react-native";
-import { Page, PlayerInput, PlayersList, Button } from "@src/components";
+import { Page, PlayerInput, PlayersInMain, Button } from "@src/components";
 import { AppContext } from "@src/store";
 import { SCREENS } from "@src/constants";
 
@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
   menu: {
     display: "flex",
     flexDirection: "column",
-    width: "80%",
+    height: "75%",
+    width: "75%",
     gap: 16,
   },
   players: {
@@ -46,7 +47,7 @@ const Main = ({ navigation }) => {
       <Page>
         <Text style={styles.header}>ARRPHABET</Text>
         <View style={styles.menu}>
-          <PlayersList
+          <PlayersInMain
             players={players}
             onRemovePlayer={handleRemovePlayer}
             style={styles.players}

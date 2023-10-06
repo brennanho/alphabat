@@ -7,17 +7,11 @@ import { Main, CategorySelection, Game } from "@src/screens";
 import { AppContextProvider } from "@src/store";
 import { SCREENS } from "@src/constants";
 
-LogBox.ignoreLogs(['Require cycles'])
+LogBox.ignoreLogs(["Require cycles"]);
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const options = {
-    // Hide back navigation
-    headerBackVisible: false,
-    headerBackTitleVisible: false,
-  };
-
   return (
     <NavigationContainer>
       <StatusBar style="auto" />
@@ -28,17 +22,12 @@ export default function App() {
             gestureDirection: "vertical",
           }}
         >
-          <Stack.Screen name={SCREENS.MAIN} component={Main} options={options} />
+          <Stack.Screen name={SCREENS.MAIN} component={Main} />
           <Stack.Screen
             name={SCREENS.CATEGORY_SELECTION}
             component={CategorySelection}
-            options={options}
           />
-          <Stack.Screen
-            name={SCREENS.GAME}
-            component={Game}
-            options={options}
-          />
+          <Stack.Screen name={SCREENS.GAME} component={Game} />
         </Stack.Navigator>
       </AppContextProvider>
     </NavigationContainer>
