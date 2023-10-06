@@ -22,8 +22,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const CategorySelection = ({ navigation, isReady }) => {
-  console.log({isReady})
+const CategorySelection = ({ navigation }) => {
   const { playerToChooseCategory, players, categories } =
     useContext(AppContext);
   const player = players.get(playerToChooseCategory);

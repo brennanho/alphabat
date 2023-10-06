@@ -1,10 +1,13 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
+import { LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Main, CategorySelection, Game } from "@src/screens";
 import { AppContextProvider } from "@src/store";
 import { SCREENS } from "@src/constants";
+
+LogBox.ignoreLogs(['Require cycles'])
 
 const Stack = createNativeStackNavigator();
 

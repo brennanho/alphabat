@@ -14,7 +14,7 @@ function getNextPlayerIdx(players, startIndex) {
 
   for (let i = 0; i < players.length; i++) {
     currentIndex = (currentIndex + 1) % players.length;
-    if (players[currentIndex].alive !== false) return currentIndex;
+    if (players[currentIndex].alive) return currentIndex;
   }
 
   return -1;
@@ -67,6 +67,8 @@ export const useGame = (
       return { name: player.name, alive: true, icon: player.icon };
     }),
     turnIndex: 0,
+    prevTurnIndex: 0,
+    prevLetterPressed: "",
     paused: false,
   });
 
@@ -86,6 +88,7 @@ export const useGame = (
       setGameState({
         ...gameState,
         players: updatedPlayers,
+        prevTurnIndex: turnIndex,
         turnIndex: getNextPlayerIdx(updatedPlayers, turnIndex),
       });
       restart();
@@ -93,23 +96,62 @@ export const useGame = (
   }
 
   function pressLetterTile(letter: string) {
-    if (letter === gameState.contestableLetter) {
-      if (gameState.paused) resume();
+    const {
+      players,
+      tiles,
+      turnIndex,
+      tilesPressed,
+      contestableLetter,
+      paused,
+    } = gameState;
+    if (letter === contestableLetter) {
+      if (paused) resume();
       else pause();
     } else {
       setGameState({
         ...gameState,
         tiles: {
-          ...gameState.tiles,
+          ...tiles,
           [letter]: { pressed: true },
         },
         contestableLetter: letter,
-        turnIndex: getNextPlayerIdx(gameState.players, gameState.turnIndex),
-        tilesPressed: gameState.tilesPressed + 1,
-        ...(gameState.tilesPressed + 1 === 24 ? INITIAL_BOARD_STATE : {}),
+        turnIndex: getNextPlayerIdx(players, turnIndex),
+        prevTurnIndex: turnIndex,
+        prevLetterPressed: letter,
+        tilesPressed: tilesPressed + 1,
+        ...(tilesPressed + 1 === 24 ? INITIAL_BOARD_STATE : {}),
       });
       restart();
     }
+  }
+
+  function killPlayerWithBadAnswer() {
+    const {
+      players: updatedPlayers,
+      prevTurnIndex,
+      tiles,
+      prevLetterPressed,
+    } = gameState;
+
+    updatedPlayers[prevTurnIndex] = {
+      ...updatedPlayers[prevTurnIndex],
+      alive: false,
+    };
+
+    const playersAlive = updatedPlayers.filter((player) => player.alive);
+    if (playersAlive.length === 1) {
+      onRoundOver(playersAlive[0].name);
+    }
+
+    setGameState({
+      ...gameState,
+      players: updatedPlayers,
+      contestableLetter: "",
+      tiles: {
+        ...tiles,
+        [prevLetterPressed]: { pressed: false },
+      },
+    });
   }
 
   return {
@@ -119,9 +161,11 @@ export const useGame = (
       paused,
     },
     pressLetterTile,
+    killPlayerWithBadAnswer,
     tiles: gameState.tiles,
     contestableLetter: gameState.contestableLetter,
     players: gameState.players,
-    playerTurnIndex: gameState.turnIndex,
+    playerToAct: gameState.players[gameState.turnIndex],
+    playerToContest: gameState.players[gameState.prevTurnIndex],
   };
 };

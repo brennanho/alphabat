@@ -1,7 +1,8 @@
 import React, { useId } from "react";
 import { StyleSheet, View } from "react-native";
-import { Button } from "@src/components";
+import { LetterButton } from "@src/components";
 import { BOARD } from "./constants";
+import { IMAGES } from "@assets/index";
 
 const styles = StyleSheet.create({
   board: {
@@ -43,27 +44,33 @@ const Board = ({ tiles, contestableLetter, onTilePressed, style = {} }) => {
                 onTilePressed(letter);
               };
 
-              const getTileStyles = () => {
+              const getTileBackgroundImageSource = () => {
                 const { pressed } = tiles[letter];
-                let backgroundColor = "white";
+                let backgroundImage = IMAGES.LETTER_BLOCK.DEFAULT;
                 if (pressed) {
-                  backgroundColor =
-                    contestableLetter === letter ? "lightgreen" : "lightpink";
+                  backgroundImage =
+                    letter === contestableLetter
+                      ? IMAGES.LETTER_BLOCK.CONTESTABLE
+                      : IMAGES.LETTER_BLOCK.PRESSED;
                 }
-                return letter
-                  ? { ...styles.tile, backgroundColor }
-                  : { display: "none" };
+                return backgroundImage;
               };
 
+              const getTileStyles = () =>
+                letter ? styles.tile : { display: "none" };
+
               return (
-                <Button
+                <LetterButton
                   key={`${id}-${letter}-${letterIdx}`}
-                  disabled={tiles[letter].pressed && contestableLetter !== letter}
+                  disabled={
+                    tiles[letter].pressed && contestableLetter !== letter
+                  }
                   onPress={handleLetterPressed}
                   style={getTileStyles()}
+                  backgroundImageSource={getTileBackgroundImageSource()}
                 >
                   {letter}
-                </Button>
+                </LetterButton>
               );
             })}
           </View>

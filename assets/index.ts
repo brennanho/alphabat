@@ -16,6 +16,11 @@ export const IMAGES = {
     MAIN: require("./testbg.png"),
     CHARACTERS: require("./scrolltest2.png"),
   },
+  LETTER_BLOCK: {
+    DEFAULT: require("./LetterBlock.png"),
+    CONTESTABLE: require("./GREEN_O.png"),
+    PRESSED: require("./RED_O.png"),
+  },
 };
 
 export const ANIMATIONS = {

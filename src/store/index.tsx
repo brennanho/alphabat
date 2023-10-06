@@ -69,7 +69,6 @@ export const AppContext = createContext(initialState);
 
 export const AppContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
-  console.log({state})
 
   const addPlayer = (playerName: string) => {
     dispatch({ type: APP_CONTEXT.ACTIONS.ADD_PLAYER, payload: playerName });
