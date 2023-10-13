@@ -1,8 +1,9 @@
-import React, { useId, useCallback } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import React, { useId, useState, useEffect, useContext } from "react";
+import { StyleSheet, View } from "react-native";
 import { LetterButton } from "@src/components";
 import { BOARD } from "./constants";
-import { IMAGES } from "@assets/index";
+import { TOTAL_LETTER_COUNT } from "@src/constants";
+import { AppContext } from "@src/store";
 
 const styles = StyleSheet.create({
   board: {
@@ -26,13 +27,27 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   tile: {
-    minWidth: "17.5%",
+    minWidth: "19%",
     height: "100%",
   },
 });
 
-const Board = ({ tiles, contestableLetter, onTilePressed, style = {} }) => {
+const Board = ({
+  tiles,
+  contestableLetter,
+  onTilePressed,
+  style = {},
+  onAnimationFinish,
+}) => {
   const id = useId();
+  const {
+    assets: { images },
+  } = useContext(AppContext);
+  const [letterAnimationsComplete, setLetterAnimationsComplete] = useState(0);
+
+  useEffect(() => {
+    if (letterAnimationsComplete === TOTAL_LETTER_COUNT) onAnimationFinish();
+  }, [letterAnimationsComplete]);
 
   return (
     <View style={{ ...styles.board, ...style }}>
@@ -46,23 +61,28 @@ const Board = ({ tiles, contestableLetter, onTilePressed, style = {} }) => {
 
               const getTileBackgroundImageSource = () => {
                 const { pressed } = tiles[letter];
-                if (!pressed) return IMAGES.LETTER_BLOCK.DEFAULT;
+                if (!pressed) return images.button.letterTile.default;
                 return letter === contestableLetter
-                  ? IMAGES.LETTER_BLOCK.CONTESTABLE
-                  : IMAGES.LETTER_BLOCK.PRESSED;
+                  ? images.button.letterTile.contestable
+                  : images.button.letterTile.pressed;
               };
 
-              const getTileStyles = () =>
-                letter ? styles.tile : { display: "none" };
+              const handleLetterAnimationFinish = () => {
+                setLetterAnimationsComplete((letterAnimationsComplete) => {
+                  return letterAnimationsComplete + 1;
+                });
+              };
 
               return (
                 <LetterButton
+                  style={styles.tile}
                   key={`${id}-${letter}-${letterIdx}`}
                   disabled={
                     tiles[letter].pressed && contestableLetter !== letter
                   }
+                  animationDelay={250 * (rowIdx + 1)}
                   onPress={handleLetterPressed}
-                  style={getTileStyles()}
+                  onAnimationFinish={handleLetterAnimationFinish}
                   backgroundImageSource={getTileBackgroundImageSource()}
                 >
                   {letter}

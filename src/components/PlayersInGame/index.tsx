@@ -1,21 +1,20 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Animated, {
-  RotateInDownRight,
   RotateOutDownRight,
-  BounceIn,
   JumpingTransition,
 } from "react-native-reanimated";
 import * as Animatable from "react-native-animatable";
 import { STYLES } from "@src/constants";
 import { FONTS } from "@assets/index";
+import AutoScaleText from "../AutoScaleText";
 
 const styles = StyleSheet.create({
   players: {
     width: "100%",
     paddingTop: 32,
     paddingBottom: 32,
-    flex: 1,
+    flex: 4,
     ...STYLES.ELEVATION,
   },
   player: {
@@ -24,41 +23,55 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     flex: 1,
     gap: 4,
+    padding: 4,
   },
-  playerIcon: { height: "100%", width: "40%" },
-  playerText: { fontSize: 16, fontFamily: FONTS.REGULAR.NAME },
+  playerIcon: { height: "100%", width: "50%" },
+  playerText: {
+    fontSize: 40,
+    fontFamily: FONTS.BOLD.NAME,
+    color: STYLES.TEXT_COLOR,
+    width: "50%",
+  },
+  playerBackground: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    borderRadius: 4,
+  },
 });
 
 const PlayersInGame = ({ players, playerToAct }) => {
   return (
-    <Animated.View
-      layout={JumpingTransition.duration(1000)}
-      style={styles.players}
-    >
+    <View style={styles.players}>
       {Object.values(players).map((player: any) => {
         return player.alive ? (
           <Animated.View
-            style={styles.player}
+            style={{
+              ...styles.player,
+              flex: playerToAct.name === player.name ? 2 : 1,
+            }}
             key={player.name}
-            layout={JumpingTransition.duration(1000)}
-            entering={BounceIn.duration(1000)}
+            layout={JumpingTransition.duration(500)}
             exiting={RotateOutDownRight.duration(1000)}
           >
             <Animatable.Image
               style={styles.playerIcon}
               source={player.icon}
               resizeMode="contain"
-              animation={playerToAct.name === player.name ? "pulse" : ""}
+              animation={playerToAct.name === player.name ? "tada" : ""}
               easing="ease-out"
               iterationCount="infinite"
             />
-            <Text style={styles.playerText}>{player.name}</Text>
+            <AutoScaleText style={styles.playerText}>
+              {player.name}
+            </AutoScaleText>
           </Animated.View>
         ) : null;
       })}
-    </Animated.View>
+    </View>
   );
 };
 

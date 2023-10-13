@@ -30,4 +30,4 @@ export const INITIAL_BOARD_STATE = {
   contestableLetter: "",
 };
 
-export const TIMEOUT = 15;
+export const TIMEOUT = 10000;

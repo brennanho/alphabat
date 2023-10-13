@@ -1,16 +1,25 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Page, Board, PlayersInGame, ChallengeModal } from "@src/components";
+import React, { useContext, useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import Animated, { BounceIn } from "react-native-reanimated";
+import {
+  Page,
+  Board,
+  PlayersInGame,
+  ChallengeModal,
+  Timer,
+  AutoScaleText,
+} from "@src/components";
+import { useTimer } from "@src/components/Timer";
 import { AppContext } from "@src/store";
 import { useGame } from "./hooks";
-import { SCREENS } from "@src/constants";
-import { ANIMATIONS, FONTS } from "@assets/index";
-import { ResizeMode, Video } from "expo-av";
+import { SCREENS, STYLES } from "@src/constants";
+import { FONTS } from "@assets/index";
 
 const styles = StyleSheet.create({
   category: {
-    fontSize: 36,
+    fontSize: 80,
     fontFamily: FONTS.BOLD.NAME,
+    color: STYLES.TEXT_COLOR,
   },
   innerBoard: {
     position: "relative",
@@ -21,10 +30,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  timer: {
-    width: "100%",
-    height: "100%",
+  innerBoardBody: {
+    display: "flex",
+    flexDirection: "column",
     flex: 1,
+    height: "100%",
+    width: "100%",
   },
 });
 
@@ -35,34 +46,46 @@ const Game = ({
   navigation,
 }) => {
   const { players: playerMap, setNextRound } = useContext(AppContext);
+  const { ref: timerRef, paused, play, pause, resume, reset } = useTimer();
+  const [loaded, setLoaded] = useState({ board: false });
   const {
-    timer: { paused, resume, seconds },
     tiles,
     contestableLetter,
-    pressLetterTile,
-    killPlayerWithBadAnswer,
     players,
     playerToAct,
     playerToContest,
-  } = useGame(playerMap, handleRoundOver);
-  const videoRef = useRef(null);
-  const [videoStatus, setVideoStatus] = useState({});
+    gameOver,
+    moveToNextPlayer,
+    killCurrentPlayer,
+    killPlayerWithBadAnswer,
+  } = useGame(playerMap);
 
   useEffect(() => {
-    videoRef.current.playFromPositionAsync(0);
-  }, [playerToAct]);
+    if (gameOver) {
+      setTimeout(() => {
+        setNextRound(playerToAct.name);
+        navigation.navigate(SCREENS.CATEGORY_SELECTION);
+      }, 1000);
+    }
+  }, [gameOver]);
 
   useEffect(() => {
-    console.log(videoStatus);
-  }, [videoStatus]);
+    if (loaded.board) play();
+  }, [loaded]);
 
-  function handleLetterPressed(letter: string) {
-    pressLetterTile(letter);
+  function handleTimerEnd() {
+    killCurrentPlayer();
+    reset();
   }
 
-  function handleRoundOver(playerName: string) {
-    setNextRound(playerName);
-    navigation.navigate(SCREENS.CATEGORY_SELECTION);
+  function handleLetterPressed(letter: string) {
+    if (!loaded.board) return;
+    else if (letter === contestableLetter) {
+      pause();
+    } else {
+      moveToNextPlayer(letter);
+      reset();
+    }
   }
 
   function handleAllowPressed() {
@@ -74,37 +97,36 @@ const Game = ({
     resume();
   }
 
+  const handleBoardAnimationFinish = () => {
+    setLoaded({ ...loaded, board: true });
+  };
+
   return (
     <Page>
       <Board
         tiles={tiles}
         onTilePressed={handleLetterPressed}
         contestableLetter={contestableLetter}
+        onAnimationFinish={handleBoardAnimationFinish}
       />
-      <View style={styles.innerBoard}>
-        <Text style={styles.category}>{category}</Text>
-        <View style={{ display: "flex", flexDirection: "row", flex: 1 }}>
-          <View>
+      {loaded.board && (
+        <View style={styles.innerBoard}>
+          <AutoScaleText style={styles.category}>{category}</AutoScaleText>
+          <Animated.View
+            style={styles.innerBoardBody}
+            entering={BounceIn.duration(500)}
+          >
             <PlayersInGame players={players} playerToAct={playerToAct} />
-            <Text>{seconds}</Text>
-          </View>
-          <Video
-            ref={videoRef}
-            style={styles.timer}
-            source={ANIMATIONS.TIMER}
-            resizeMode={ResizeMode.CONTAIN}
-            shouldPlay={!paused}
-            isLooping
-            onPlaybackStatusUpdate={(status) => setVideoStatus(status)}
+            <Timer ref={timerRef} onTimerEnd={handleTimerEnd} duration={15} />
+          </Animated.View>
+          <ChallengeModal
+            visible={paused}
+            playerName={playerToContest.name}
+            onAllowPressed={handleAllowPressed}
+            onDeniedPressed={handleDeniedPressed}
           />
         </View>
-        <ChallengeModal
-          visible={paused}
-          playerName={playerToContest.name}
-          onAllowPressed={handleAllowPressed}
-          onDeniedPressed={handleDeniedPressed}
-        />
-      </View>
+      )}
     </Page>
   );
 };

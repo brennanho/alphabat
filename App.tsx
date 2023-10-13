@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { LogBox } from "react-native";
@@ -7,33 +7,52 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Main, CategorySelection, Game } from "@src/screens";
 import { AppContextProvider } from "@src/store";
 import { SCREENS } from "@src/constants";
-import { FONTS } from "./assets";
+import { FONTS, loadAssets } from "./assets";
 
-LogBox.ignoreLogs(["Require cycles"]);
+LogBox.ignoreLogs(["Require cycles", "(ADVICE)"]);
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
-  const [fontsLoaded] = useFonts({
-    [FONTS.REGULAR.NAME]: FONTS.REGULAR.SOURCE,
-    [FONTS.BOLD.NAME]: FONTS.BOLD.SOURCE,
+const useAssets = () => {
+  const [assets, setAssets] = useState({
+    assets: {},
+    loaded: false,
   });
 
-  if (!fontsLoaded) {
+  const downloadAssets = async () => {
+    const assets = await loadAssets();
+    setAssets({ assets, loaded: true });
+  };
+
+  useEffect(() => {
+    downloadAssets();
+  }, []);
+
+  return assets;
+};
+
+export default function App() {
+  const [fontsLoaded] = useFonts({
+    [FONTS.BOLD.NAME]: FONTS.REGULAR.SOURCE,
+    [FONTS.BOLD.NAME]: FONTS.BOLD.SOURCE,
+  });
+  const { assets, loaded: assetsLoaded } = useAssets();
+
+  if (!fontsLoaded || !assetsLoaded) {
     return null;
   }
 
   return (
     <NavigationContainer>
       <StatusBar style="auto" />
-      <AppContextProvider>
+      <AppContextProvider assets={assets}>
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
             gestureDirection: "vertical",
           }}
         >
-          <Stack.Screen name={SCREENS.MAIN} component={Main} />
+          <Stack.Screen name={SCREENS.main} component={Main} />
           <Stack.Screen
             name={SCREENS.CATEGORY_SELECTION}
             component={CategorySelection}

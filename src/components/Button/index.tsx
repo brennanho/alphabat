@@ -1,29 +1,42 @@
-import React from 'react';
-import { Pressable, StyleSheet, Text } from "react-native";
+import React, { useContext } from "react";
+import { Pressable, StyleSheet, Image } from "react-native";
 import { STYLES } from "@src/constants";
-import { FONTS } from '@assets/index';
+import { FONTS } from "@assets/index";
+import AutoScaleText from "../AutoScaleText";
+import { AppContext } from "@src/store";
 
 const styles = StyleSheet.create({
   button: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "transparent",
     height: "100%",
+    ...STYLES.ELEVATION
   },
   text: {
-    fontFamily: FONTS.REGULAR.NAME
-  }
+    fontFamily: FONTS.BOLD.NAME,
+    color: STYLES.TEXT_COLOR_WHITE,
+    fontSize: 64,
+    padding: 12,
+  },
+  background: {
+    position: "absolute",
+    height: "100%",
+    width: "100%",
+  },
 });
 
 const Button = ({
   onPress,
   disabled = false,
   children,
+  withBackground = true,
   style = {},
-  fontSize = 32,
-  elevation = true,
+  textStyles = {},
 }) => {
+  const { assets: { images }} = useContext(AppContext);
+
   return (
     <Pressable
       onPress={onPress}
@@ -31,10 +44,18 @@ const Button = ({
       style={{
         ...styles.button,
         ...style,
-        ...(elevation ? STYLES.ELEVATION : {}),
       }}
     >
-      <Text style={{ ...styles.text, fontSize }}>{children}</Text>
+      {withBackground && (
+        <Image
+          source={images.button.default}
+          style={styles.background}
+          resizeMode="stretch"
+        />
+      )}
+      <AutoScaleText style={{ ...styles.text, ...textStyles }}>
+        {children}
+      </AutoScaleText>
     </Pressable>
   );
 };

@@ -1,8 +1,12 @@
-import React from "react";
-import { Video, ResizeMode } from 'expo-av';
-import { Asset } from 'expo-asset';
-import { SafeAreaView, StyleSheet, StatusBar, Dimensions } from "react-native";
-import { ANIMATIONS } from "@assets/index";
+import React, { useContext } from "react";
+import {
+  SafeAreaView,
+  ImageBackground,
+  StyleSheet,
+  StatusBar,
+  Dimensions,
+} from "react-native";
+import { AppContext } from "@src/store";
 
 const styles = StyleSheet.create({
   page: {
@@ -15,24 +19,24 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight,
   },
   background: {
-    width: "100%",
-    height: "100%",
-    position: "absolute",
+    // width: "100%",
+    // height: "100%",
   },
 });
 
 const Page = ({ children }) => {
+  const {
+    assets: { images },
+  } = useContext(AppContext);
+
   return (
-    <>
-      {/* <Video
-        style={styles.background}
-        source={ANIMATIONS.BACKGROUND_WAVES}
-        resizeMode={ResizeMode.COVER}
-        shouldPlay
-        isLooping
-      /> */}
+    <ImageBackground
+      style={styles.background}
+      source={images.background.main}
+      resizeMode="cover"
+    >
       <SafeAreaView style={styles.page}>{children}</SafeAreaView>
-    </>
+    </ImageBackground>
   );
 };
 

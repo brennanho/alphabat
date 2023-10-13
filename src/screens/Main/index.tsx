@@ -1,28 +1,35 @@
 import React, { useContext } from "react";
 import { Text, StyleSheet, View } from "react-native";
-import { Page, PlayerInput, PlayersInMain, Button } from "@src/components";
+import {
+  Page,
+  PlayerInput,
+  PlayersInMain,
+  Button,
+  AutoScaleText,
+} from "@src/components";
 import { AppContext } from "@src/store";
-import { SCREENS } from "@src/constants";
+import { SCREENS, STYLES } from "@src/constants";
 import { FONTS } from "@assets/index";
 
 const styles = StyleSheet.create({
   header: {
-    fontSize: 64,
-    fontFamily: FONTS.REGULAR.NAME,
-    marginBottom: 32,
+    fontSize: 128,
+    fontFamily: FONTS.BOLD.NAME,
+    color: STYLES.TEXT_COLOR,
+    padding: 16,
   },
   menu: {
     display: "flex",
     flexDirection: "column",
     height: "75%",
-    width: "75%",
-    gap: 16,
+    width: "80%",
+    gap: 20,
   },
   playerInput: {
-    height: 64,
+    height: "10%",
   },
   startGame: {
-    height: 64,
+    height: "15%",
   },
 });
 
@@ -45,7 +52,7 @@ const Main = ({ navigation }) => {
   return (
     <>
       <Page>
-        <Text style={styles.header}>ARRPHABET</Text>
+        <AutoScaleText style={styles.header}>ARRPHABET</AutoScaleText>
         <View style={styles.menu}>
           <PlayersInMain
             players={players}
@@ -60,7 +67,7 @@ const Main = ({ navigation }) => {
             disabled={startGameDisabled}
             onPress={handleNavigation}
           >
-            START GAME
+            PLAY
           </Button>
         </View>
       </Page>

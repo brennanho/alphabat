@@ -7,3 +7,6 @@ export { default as PlayersInMain } from "./PlayersInMain";
 export { default as PlayersInGame } from "./PlayersInGame";
 export { default as LetterButton } from "./LetterButton";
 export { default as ChallengeModal } from "./ChallengeModal";
+export { default as Timer } from "./Timer";
+export { default as Categories } from "./Categories";
+export { default as AutoScaleText } from "./AutoScaleText";

@@ -1,31 +1,19 @@
 import React, { useContext } from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { Page, Button, Player } from "@src/components";
+import { Page, Player, Categories } from "@src/components";
 import { AppContext } from "@src/store";
-import { NUMBER_OF_CATEGORIES_TO_SELECT, SCREENS } from "@src/constants";
-
-const styles = StyleSheet.create({
-  playerToChooseCategory: {
-    fontSize: 32,
-    marginBottom: 128,
-  },
-  categories: {
-    display: "flex",
-    flexDirection: "column",
-    width: "100%",
-    paddingLeft: 80,
-    paddingRight: 80,
-    gap: 16,
-  },
-  category: {
-    height: 64,
-  },
-});
+import { SCORE_TO_WIN, SCREENS } from "@src/constants";
 
 const CategorySelection = ({ navigation }) => {
-  const { playerToChooseCategory, players, categories } =
+  const { playerToChooseCategory, players, categories, resetGame } =
     useContext(AppContext);
   const player = players.get(playerToChooseCategory);
+
+  if (player && player.score === SCORE_TO_WIN) {
+    setTimeout(() => {
+      navigation.navigate(SCREENS.main);
+      resetGame();
+    }, 1000);
+  }
 
   const handleCategoryPressed = (category: string) => {
     navigation.navigate(SCREENS.GAME, { category });
@@ -34,25 +22,10 @@ const CategorySelection = ({ navigation }) => {
   return (
     <Page>
       <Player player={player} />
-      <View style={styles.categories}>
-        {categories
-          .slice(0, NUMBER_OF_CATEGORIES_TO_SELECT)
-          .map((category: string) => {
-            const handlePress = () => {
-              handleCategoryPressed(category);
-            };
-
-            return (
-              <Button
-                key={category}
-                style={styles.category}
-                onPress={handlePress}
-              >
-                {category}
-              </Button>
-            );
-          })}
-      </View>
+      <Categories
+        categories={categories}
+        onCategoryPressed={handleCategoryPressed}
+      />
     </Page>
   );
 };

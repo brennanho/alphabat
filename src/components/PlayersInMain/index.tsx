@@ -1,11 +1,6 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-} from "react-native";
-import { Button } from "@src/components";
+import { View, StyleSheet, Image } from "react-native";
+import { AutoScaleText, Button } from "@src/components";
 import { Player } from "@src/types";
 import { STYLES } from "@src/constants";
 import Animated, {
@@ -13,10 +8,10 @@ import Animated, {
   SlideInRight,
   SlideOutRight,
 } from "react-native-reanimated";
-import { FONTS } from "@assets/index";
+import { FONTS, images } from "@assets/index";
 
 const styles = StyleSheet.create({
-  players: {
+  playersInMain: {
     width: "100%",
     flex: 1,
     ...STYLES.ELEVATION,
@@ -29,21 +24,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flex: 1,
-    paddingRight: 24,
   },
   playerTextAndCancelButtonWrapper: {
     flex: 2,
+    height: "100%",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    gap: 16,
   },
-  playerIcon: { height: "100%", flex: 1, flexGrow: 2, alignSelf: "flex-start" },
-  playerText: { fontSize: 16, fontFamily: FONTS.REGULAR.NAME },
+  playerIcon: { height: "100%", flex: 1, flexGrow: 1, alignSelf: "flex-start" },
+  playerText: {
+    fontSize: 40,
+    fontFamily: FONTS.BOLD.NAME,
+    color: STYLES.TEXT_COLOR_WHITE,
+    flex: 2,
+  },
   cancelButton: {
-    height: 32,
-    backgroundColor: "transparent",
+    height: 40,
   },
+  background: { position: "absolute", width: "100%", height: "100%" },
 });
 
 interface PlayersListProps {
@@ -56,16 +57,14 @@ const PlayersInMain = ({
   onRemovePlayer = (playerName) => null,
 }: PlayersListProps) => {
   return (
-    <View
-      style={styles.players}
-    >
+    <View style={styles.playersInMain}>
       {Array.from(players).map(([, player]) => {
         const handlePress = () => onRemovePlayer(player.name);
         return (
           <Animated.View
             style={styles.player}
             key={player.name}
-            layout={JumpingTransition.duration(1000).delay(0)}
+            layout={JumpingTransition.duration(1000)}
             entering={SlideInRight.duration(1000)}
             exiting={SlideOutRight.duration(1000)}
           >
@@ -75,11 +74,12 @@ const PlayersInMain = ({
               resizeMode="contain"
             />
             <View style={styles.playerTextAndCancelButtonWrapper}>
-              <Text style={styles.playerText}>{player.name}</Text>
+              <AutoScaleText style={styles.playerText}>
+                {player.name}
+              </AutoScaleText>
               <Button
                 style={styles.cancelButton}
                 onPress={handlePress}
-                fontSize={16}
               >
                 ✕
               </Button>
