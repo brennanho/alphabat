@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import { Pressable, StyleSheet, Image } from "react-native";
 import Animated, {
   useSharedValue,
@@ -6,16 +6,14 @@ import Animated, {
   Easing,
   useAnimatedStyle,
   withSequence,
-  FlipInEasyX,
   FlipOutEasyX,
-  FlipInXDown,
-  FlipInXUp,
-  BounceInDown,
   SlideInDown,
 } from "react-native-reanimated";
+import LottieView from "lottie-react-native";
 import { STYLES } from "@src/constants";
 import { FONTS } from "@assets/index";
 import AutoScaleText from "../AutoScaleText";
+import { AppContext } from "@src/store";
 
 const styles = StyleSheet.create({
   button: {
@@ -35,7 +33,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   text: {
-    fontFamily: FONTS.BOLD.NAME,
+    fontFamily: FONTS.REGULAR.NAME,
     color: "white",
     fontSize: 128,
     padding: 12,
@@ -48,20 +46,20 @@ const LetterButton = ({
   disabled = false,
   children,
   style = {},
-  backgroundImageSource,
   animationDelay,
+  contestable,
 }) => {
   const enterAnimationDuration = 500;
-  const opacity = useSharedValue(1);
-  const animatedStyles = useAnimatedStyle(() => {
-    return {
-      opacity: opacity.value,
-    };
-  }, [backgroundImageSource]);
+  const {
+    assets: {
+      animations: { letterTile },
+    },
+  } = useContext(AppContext);
   const enteringAnimation = SlideInDown.duration(enterAnimationDuration).delay(
     animationDelay
   );
   const exitingAnimation = FlipOutEasyX.duration(3000);
+  const [transitioning, setTransitioning] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -70,25 +68,35 @@ const LetterButton = ({
   }, []);
 
   const handlePress = () => {
-    opacity.value = withSequence(
-      withTiming(0, {
-        duration: 100,
-        easing: Easing.out(Easing.ease),
-      }),
-      withTiming(1, {
-        duration: 100,
-        easing: Easing.in(Easing.ease),
-      })
-    );
     onPress();
+    setTransitioning(true);
   };
 
+  let buttonAnimationProps;
+  if (transitioning)
+    buttonAnimationProps = {
+      source: letterTile.transition,
+      onAnimationFinish: (isCancelled) => {
+        if (!isCancelled) setTransitioning(false);
+      },
+      autoPlay: true,
+      loop: false,
+    };
+  else if (contestable)
+    buttonAnimationProps = {
+      source: letterTile.contestable,
+      autoPlay: true,
+      loop: true,
+    };
+  else
+    buttonAnimationProps = {
+      source: disabled ? letterTile.pressed : letterTile.unpressed,
+      autoPlay: true,
+      loop: true,
+    };
+
   return (
-    <Animated.View
-      style={animatedStyles}
-      exiting={exitingAnimation}
-      entering={enteringAnimation}
-    >
+    <Animated.View exiting={exitingAnimation} entering={enteringAnimation}>
       <Pressable
         onPressIn={handlePress}
         disabled={disabled}
@@ -97,12 +105,31 @@ const LetterButton = ({
           ...style,
         }}
       >
-        <Image
-          source={backgroundImageSource}
-          style={styles.background}
-          resizeMode="stretch"
-        />
-        <AutoScaleText style={styles.text}>{children}</AutoScaleText>
+        <LottieView
+          style={{
+            ...styles.background,
+            display: disabled && !transitioning ? "none" : "flex",
+          }}
+          resizeMode="cover"
+          {...buttonAnimationProps}
+        ></LottieView>
+        {/* {contestable && (
+          <LottieView
+            source={letterTile.radiate}
+            style={styles.background}
+            resizeMode="cover"
+            loop
+            autoPlay
+          />
+        )} */}
+        <AutoScaleText
+          style={{
+            ...styles.text,
+            display: disabled && !transitioning ? "none" : "flex",
+          }}
+        >
+          {children}
+        </AutoScaleText>
       </Pressable>
     </Animated.View>
   );

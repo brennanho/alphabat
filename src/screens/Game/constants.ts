@@ -29,5 +29,3 @@ export const INITIAL_BOARD_STATE = {
   tilesPressed: 0,
   contestableLetter: "",
 };
-
-export const TIMEOUT = 10000;

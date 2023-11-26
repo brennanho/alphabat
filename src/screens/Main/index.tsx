@@ -1,23 +1,11 @@
 import React, { useContext } from "react";
-import { Text, StyleSheet, View } from "react-native";
-import {
-  Page,
-  PlayerInput,
-  PlayersInMain,
-  Button,
-  AutoScaleText,
-} from "@src/components";
+import { StyleSheet, View, Image } from "react-native";
+import { Page, PlayerInput, PlayersInMain, Button } from "@src/components";
 import { AppContext } from "@src/store";
 import { SCREENS, STYLES } from "@src/constants";
-import { FONTS } from "@assets/index";
 
 const styles = StyleSheet.create({
-  header: {
-    fontSize: 128,
-    fontFamily: FONTS.BOLD.NAME,
-    color: STYLES.TEXT_COLOR,
-    padding: 16,
-  },
+  title: { width: "95%", ...STYLES.ELEVATION },
   menu: {
     display: "flex",
     flexDirection: "column",
@@ -34,7 +22,7 @@ const styles = StyleSheet.create({
 });
 
 const Main = ({ navigation }) => {
-  const { players, addPlayer, removePlayer } = useContext(AppContext);
+  const { players, addPlayer, removePlayer, assets } = useContext(AppContext);
   const startGameDisabled = players.size <= 1;
 
   const handleAddPlayer = (playerName: string) => {
@@ -52,7 +40,11 @@ const Main = ({ navigation }) => {
   return (
     <>
       <Page>
-        <AutoScaleText style={styles.header}>ARRPHABET</AutoScaleText>
+        <Image
+          source={assets.images.title}
+          resizeMode="contain"
+          style={styles.title}
+        />
         <View style={styles.menu}>
           <PlayersInMain
             players={players}

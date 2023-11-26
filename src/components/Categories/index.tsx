@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: "80%",
     flex: 1,
-    marginBottom: 80,
+    marginBottom: 32,
     gap: 16,
   },
   category: {

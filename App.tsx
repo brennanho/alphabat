@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { LogBox } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Main, CategorySelection, Game } from "@src/screens";
 import { AppContextProvider } from "@src/store";
 import { SCREENS } from "@src/constants";
 import { FONTS, loadAssets } from "./assets";
+import { Assets } from "@src/types";
 
 LogBox.ignoreLogs(["Require cycles", "(ADVICE)"]);
 
@@ -15,7 +16,7 @@ const Stack = createNativeStackNavigator();
 
 const useAssets = () => {
   const [assets, setAssets] = useState({
-    assets: {},
+    assets: null as Assets,
     loaded: false,
   });
 
@@ -33,8 +34,7 @@ const useAssets = () => {
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    [FONTS.BOLD.NAME]: FONTS.REGULAR.SOURCE,
-    [FONTS.BOLD.NAME]: FONTS.BOLD.SOURCE,
+    [FONTS.REGULAR.NAME]: FONTS.REGULAR.SOURCE,
   });
   const { assets, loaded: assetsLoaded } = useAssets();
 
@@ -43,7 +43,12 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      theme={{
+        ...DefaultTheme,
+        colors: { ...DefaultTheme.colors, background: "transparent" }, // Ensures background doesn't flicker when changing screens
+      }}
+    >
       <StatusBar style="auto" />
       <AppContextProvider assets={assets}>
         <Stack.Navigator

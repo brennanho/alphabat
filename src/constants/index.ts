@@ -66,6 +66,6 @@ export const STYLES = {
   },
   TEXT_COLOR: "white",
   TEXT_COLOR_WHITE: "white",
-  TEXT_COLOR_PLACEHOLDER: "#953824"
+  TEXT_COLOR_PLACEHOLDER: "#6547e7"
 };
 

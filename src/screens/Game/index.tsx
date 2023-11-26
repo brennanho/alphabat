@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import Animated, { BounceIn } from "react-native-reanimated";
 import {
   Page,
@@ -18,7 +18,7 @@ import { FONTS } from "@assets/index";
 const styles = StyleSheet.create({
   category: {
     fontSize: 80,
-    fontFamily: FONTS.BOLD.NAME,
+    fontFamily: FONTS.REGULAR.NAME,
     color: STYLES.TEXT_COLOR,
   },
   innerBoard: {
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 
 const Game = ({
   route: {
-    params: { category },
+    params: { category, playerToActFirst },
   },
   navigation,
 }) => {
@@ -58,7 +58,7 @@ const Game = ({
     moveToNextPlayer,
     killCurrentPlayer,
     killPlayerWithBadAnswer,
-  } = useGame(playerMap);
+  } = useGame(playerMap, playerToActFirst);
 
   useEffect(() => {
     if (gameOver) {
@@ -111,6 +111,9 @@ const Game = ({
       />
       {loaded.board && (
         <View style={styles.innerBoard}>
+          <Pressable>
+            
+          </Pressable>
           <AutoScaleText style={styles.category}>{category}</AutoScaleText>
           <Animated.View
             style={styles.innerBoardBody}

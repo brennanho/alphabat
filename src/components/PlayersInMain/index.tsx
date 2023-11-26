@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   playerIcon: { height: "100%", flex: 1, flexGrow: 1, alignSelf: "flex-start" },
   playerText: {
     fontSize: 40,
-    fontFamily: FONTS.BOLD.NAME,
+    fontFamily: FONTS.REGULAR.NAME,
     color: STYLES.TEXT_COLOR_WHITE,
     flex: 2,
   },

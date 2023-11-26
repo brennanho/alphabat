@@ -18,23 +18,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: StatusBar.currentHeight,
   },
-  background: {
-    // width: "100%",
-    // height: "100%",
-  },
 });
 
 const Page = ({ children }) => {
   const {
     assets: { images },
   } = useContext(AppContext);
-
   return (
-    <ImageBackground
-      style={styles.background}
-      source={images.background.main}
-      resizeMode="cover"
-    >
+    <ImageBackground source={images.background.main} resizeMode="cover">
       <SafeAreaView style={styles.page}>{children}</SafeAreaView>
     </ImageBackground>
   );

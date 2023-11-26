@@ -40,10 +40,12 @@ const Board = ({
   onAnimationFinish,
 }) => {
   const id = useId();
-  const {
-    assets: { images },
-  } = useContext(AppContext);
   const [letterAnimationsComplete, setLetterAnimationsComplete] = useState(0);
+  const {
+    assets: {
+      animations: { board },
+    },
+  } = useContext(AppContext);
 
   useEffect(() => {
     if (letterAnimationsComplete === TOTAL_LETTER_COUNT) onAnimationFinish();
@@ -59,14 +61,6 @@ const Board = ({
                 onTilePressed(letter);
               };
 
-              const getTileBackgroundImageSource = () => {
-                const { pressed } = tiles[letter];
-                if (!pressed) return images.button.letterTile.default;
-                return letter === contestableLetter
-                  ? images.button.letterTile.contestable
-                  : images.button.letterTile.pressed;
-              };
-
               const handleLetterAnimationFinish = () => {
                 setLetterAnimationsComplete((letterAnimationsComplete) => {
                   return letterAnimationsComplete + 1;
@@ -80,10 +74,10 @@ const Board = ({
                   disabled={
                     tiles[letter].pressed && contestableLetter !== letter
                   }
+                  contestable={contestableLetter === letter}
                   animationDelay={250 * (rowIdx + 1)}
                   onPress={handleLetterPressed}
                   onAnimationFinish={handleLetterAnimationFinish}
-                  backgroundImageSource={getTileBackgroundImageSource()}
                 >
                   {letter}
                 </LetterButton>

@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   message: {
-    fontFamily: FONTS.BOLD.NAME,
+    fontFamily: FONTS.REGULAR.NAME,
     color: STYLES.TEXT_COLOR_WHITE,
     fontSize: 128,
     padding: 24,

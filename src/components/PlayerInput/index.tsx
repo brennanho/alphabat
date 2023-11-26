@@ -16,14 +16,14 @@ const styles = StyleSheet.create({
     height: "100%",
     fontSize: 24,
     padding: 8,
-    paddingLeft: "15%",
-    fontFamily: FONTS.BOLD.NAME,
+    paddingLeft: "10%",
+    fontFamily: FONTS.REGULAR.NAME,
     color: STYLES.TEXT_COLOR_WHITE,
     flex: 2,
   },
   buttonAdd: {
-    flex: 1,
-    paddingRight: 12,
+    // flex: 1,
+    paddingRight: 16,
   },
   background: {
     position: "absolute",

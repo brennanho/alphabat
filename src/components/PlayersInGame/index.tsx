@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   playerIcon: { height: "100%", width: "50%" },
   playerText: {
     fontSize: 40,
-    fontFamily: FONTS.BOLD.NAME,
+    fontFamily: FONTS.REGULAR.NAME,
     color: STYLES.TEXT_COLOR,
     width: "50%",
   },
@@ -49,10 +49,7 @@ const PlayersInGame = ({ players, playerToAct }) => {
       {Object.values(players).map((player: any) => {
         return player.alive ? (
           <Animated.View
-            style={{
-              ...styles.player,
-              flex: playerToAct.name === player.name ? 2 : 1,
-            }}
+            style={styles.player}
             key={player.name}
             layout={JumpingTransition.duration(500)}
             exiting={RotateOutDownRight.duration(1000)}

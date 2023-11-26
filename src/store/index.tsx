@@ -8,7 +8,7 @@ import {
 import { Assets, Player } from "@src/types";
 
 const initialState = {
-  assets: { images: {}, FONTS: {}, animations: {} } as Assets,
+  assets: { images: {}, animations: {} } as Assets,
   players: new Map<string, Player>([]),
   playerToChooseCategory: "",
   categories: CATEGORIES,
@@ -71,6 +71,7 @@ const appReducer = (state, action) => {
       });
       return {
         ...initialState,
+        assets: state.assets,
         players: updatedPlayers,
         playerToChooseCategory: (updatedPlayers.values().next().value || {})
           .name,

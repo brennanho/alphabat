@@ -12,17 +12,13 @@ function getNextPlayerIdx(players, startIndex) {
   return -1;
 }
 
-function getRandomTurnIndex(length) {
-  return Math.floor(Math.random() * length);
-}
-
-export const useGame = (playersMap: Map<string, Player>) => {
+export const useGame = (playersMap: Map<string, Player>, playerToActFirst: Player) => {
   const [gameState, setGameState] = useState({
     ...INITIAL_BOARD_STATE,
-    players: Array.from(playersMap).map(([, player]) => {
+    players: [...playersMap.values()].map((player: Player) => {
       return { name: player.name, alive: true, icon: player.icon };
     }),
-    turnIndex: getRandomTurnIndex(playersMap.size),
+    turnIndex: [...playersMap.values()].indexOf(playerToActFirst),
     prevTurnIndex: 0,
     prevLetterPressed: "",
     gameOver: false,

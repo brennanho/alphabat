@@ -1,20 +1,27 @@
+import { Assets } from "@src/types";
 import { Asset } from "expo-asset";
 
-export const loadAssets = async () => {
+export const loadAssets = async (): Promise<Assets> => {
   return {
     images: {
       background: {
         main: await Asset.fromModule(
-          require("./junglebg1.jpg")
+          require("./BG_Sizetest.png")
         ).downloadAsync(),
       },
+      title: await Asset.fromModule(require('./AlphaBeatTitle_Sizetest.png')).downloadAsync(),
       textInput: await Asset.fromModule(
-        require("./text_input.png")
+        require("./AlphaBeatINPUT_Sizetest.png")
       ).downloadAsync(),
       button: {
         default: await Asset.fromModule(
-          require("./button7.png")
+          require("./AlphaBeatPLAY_Sizetest.png")
         ).downloadAsync(),
+        pause: {
+          default: await Asset.fromModule(
+            require("./pausebutton.png")
+          ).downloadAsync(),
+        },
         letterTile: {
           default: await Asset.fromModule(
             require("./LetterBlock2.png")
@@ -40,11 +47,18 @@ export const loadAssets = async () => {
     },
     animations: {
       timer: require("./bomb_timer_1.json"),
+      board: require("./DeadstateLineMoveTest.json"),
+      letterTile: {
+        unpressed: require("./DM_Tile_Unpressed_120x.json"),
+        pressed: require("./DeadspaceMovementTest.json"),
+        transition: require("./DiscoMammals_TileTRANSITION_UNPRESSED-PRESSED_Fancy.json"),
+        contestable: require("./DM_Tile_Pressed_CHALLENGE.json"),
+        radiate: require("./DiscoMammals_Tile_PRESSED_RadiateFX.json"),
+      },
     },
   };
 };
 
 export const FONTS = {
-  REGULAR: { NAME: "alphabat", SOURCE: require("./SimplyRounded.ttf") },
-  BOLD: { NAME: "alphabet-bold", SOURCE: require("./SimplyRoundedBold.ttf") },
+  REGULAR: { NAME: "alphabat", SOURCE: require("./SimplyRoundedBold.ttf") },
 };

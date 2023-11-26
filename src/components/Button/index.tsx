@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     ...STYLES.ELEVATION
   },
   text: {
-    fontFamily: FONTS.BOLD.NAME,
+    fontFamily: FONTS.REGULAR.NAME,
     color: STYLES.TEXT_COLOR_WHITE,
     fontSize: 64,
     padding: 12,
