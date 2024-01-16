@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
   timer: {
     width: "100%",
     height: "100%",
-    flex: 1,
     alignSelf: "center",
     ...STYLES.ELEVATION,
   },
@@ -58,28 +57,31 @@ export const useTimer = () => {
 interface TimerProps {
   onTimerEnd: () => void;
   duration?: number;
+  style: any;
 }
 
-const Timer = forwardRef(({ duration = 15, onTimerEnd }: TimerProps, ref) => {
-  const {
-    assets: { animations },
-  } = useContext(AppContext);
+const Timer = forwardRef(
+  ({ duration = 15, style, onTimerEnd }: TimerProps, ref) => {
+    const {
+      assets: { animations },
+    } = useContext(AppContext);
 
-  const handleTimerEnd = (isCancelled: boolean) => {
-    if (!isCancelled) onTimerEnd();
-  };
+    const handleTimerEnd = (isCancelled: boolean) => {
+      if (!isCancelled) onTimerEnd();
+    };
 
-  return (
-    <LottieView
-      ref={ref as any}
-      onAnimationFinish={handleTimerEnd}
-      source={animations.timer}
-      duration={duration * 1000}
-      loop={false}
-      style={styles.timer}
-      resizeMode="contain"
-    />
-  );
-});
+    return (
+      <LottieView
+        ref={ref as any}
+        onAnimationFinish={handleTimerEnd}
+        source={animations.timer}
+        duration={duration * 1000}
+        loop={false}
+        style={{ ...styles.timer, ...style }}
+        resizeMode="contain"
+      />
+    );
+  }
+);
 
 export default Timer;

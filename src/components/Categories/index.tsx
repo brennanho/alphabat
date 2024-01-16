@@ -6,10 +6,7 @@ import { NUMBER_OF_CATEGORIES_TO_SELECT } from "@src/constants";
 const styles = StyleSheet.create({
   categories: {
     display: "flex",
-    flexDirection: "column",
-    width: "80%",
-    flex: 1,
-    marginBottom: 32,
+    width: "100%",
     gap: 16,
   },
   category: {
@@ -17,13 +14,13 @@ const styles = StyleSheet.create({
   },
   categoryText: {
     paddingLeft: 32,
-    paddingRight: 32
-  }
+    paddingRight: 32,
+  },
 });
 
-const Categories = ({ categories, onCategoryPressed }) => {
+const Categories = ({ categories, onCategoryPressed, style }) => {
   return (
-    <View style={styles.categories}>
+    <View style={{ ...styles.categories, ...style }}>
       {categories
         .slice(0, NUMBER_OF_CATEGORIES_TO_SELECT)
         .map((category: string) => {
@@ -37,6 +34,7 @@ const Categories = ({ categories, onCategoryPressed }) => {
               style={styles.category}
               textStyles={styles.categoryText}
               onPress={handlePress}
+              withWideBackgroundImage
             >
               {category}
             </Button>

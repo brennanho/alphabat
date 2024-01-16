@@ -27,7 +27,7 @@ const appReducer = (state, action) => {
       if (numPlayers >= MAX_PLAYERS || updatedPlayers.has(playerNameToAdd))
         return state;
       updatedPlayers.set(playerNameToAdd, {
-        score: 0,
+        lives: 3,
         name: playerNameToAdd,
         icon: state.assets.images.characters.pop(),
       });
@@ -51,23 +51,24 @@ const appReducer = (state, action) => {
     case APP_CONTEXT.ACTIONS.SET_NEXT_ROUND:
       const playerToChooseCategory = action.payload;
       const updatedCategories = [...state.categories];
-      const playerToChooseCategoryObject = updatedPlayers.get(
-        playerToChooseCategory
-      );
       updatedCategories.splice(0, NUMBER_OF_CATEGORIES_TO_SELECT);
-      updatedPlayers.set(playerToChooseCategory, {
-        ...playerToChooseCategoryObject,
-        score: playerToChooseCategoryObject.score + 1,
+      const updatedPlayersCopy = new Map(updatedPlayers);
+
+      updatedPlayersCopy.forEach((player, playerName) => {
+        if (playerName !== playerToChooseCategory) {
+          player.lives -= 1;
+        }
       });
+
       return {
         ...state,
-        players: updatedPlayers,
+        players: updatedPlayersCopy,
         categories: updatedCategories,
         playerToChooseCategory,
       };
     case APP_CONTEXT.ACTIONS.RESET_GAME:
       updatedPlayers.forEach((player: Player, playerName: string) => {
-        updatedPlayers.set(playerName, { ...player, score: 0 });
+        updatedPlayers.set(playerName, { ...player, lives: 3 });
       });
       return {
         ...initialState,

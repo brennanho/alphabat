@@ -12,12 +12,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "transparent",
     height: "100%",
-    ...STYLES.ELEVATION
+    ...STYLES.ELEVATION,
   },
   text: {
     fontFamily: FONTS.REGULAR.NAME,
     color: STYLES.TEXT_COLOR_WHITE,
-    fontSize: 64,
+    fontSize: 32,
     padding: 12,
   },
   background: {
@@ -32,10 +32,13 @@ const Button = ({
   disabled = false,
   children,
   withBackground = true,
+  withWideBackgroundImage = false,
   style = {},
   textStyles = {},
 }) => {
-  const { assets: { images }} = useContext(AppContext);
+  const {
+    assets: { images },
+  } = useContext(AppContext);
 
   return (
     <Pressable
@@ -48,7 +51,9 @@ const Button = ({
     >
       {withBackground && (
         <Image
-          source={images.button.default}
+          source={
+            withWideBackgroundImage ? images.textInput : images.button.default
+          }
           style={styles.background}
           resizeMode="stretch"
         />

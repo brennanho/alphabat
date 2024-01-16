@@ -8,7 +8,7 @@ import Animated, {
   SlideInRight,
   SlideOutRight,
 } from "react-native-reanimated";
-import { FONTS, images } from "@assets/index";
+import { FONTS } from "@assets/index";
 
 const styles = StyleSheet.create({
   playersInMain: {
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   playerIcon: { height: "100%", flex: 1, flexGrow: 1, alignSelf: "flex-start" },
   playerText: {
     fontSize: 40,
+    paddingLeft: 8,
     fontFamily: FONTS.REGULAR.NAME,
     color: STYLES.TEXT_COLOR_WHITE,
     flex: 2,
@@ -80,6 +81,7 @@ const PlayersInMain = ({
               <Button
                 style={styles.cancelButton}
                 onPress={handlePress}
+                withBackground={false}
               >
                 ✕
               </Button>

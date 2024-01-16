@@ -31,7 +31,7 @@ export const CATEGORIES = shuffle([
   "Programming Languages"
 ]);
 
-export const MAX_PLAYERS = 8;
+export const MAX_PLAYERS = 4;
 export const NUMBER_OF_CATEGORIES_TO_SELECT = 3;
 export const SCORE_TO_WIN = 3;
 export const TOTAL_LETTER_COUNT = 24;

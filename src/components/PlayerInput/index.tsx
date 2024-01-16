@@ -14,16 +14,15 @@ const styles = StyleSheet.create({
   },
   input: {
     height: "100%",
-    fontSize: 24,
+    fontSize: 16,
     padding: 8,
-    paddingLeft: "10%",
+    paddingLeft: 24,
     fontFamily: FONTS.REGULAR.NAME,
     color: STYLES.TEXT_COLOR_WHITE,
     flex: 2,
   },
   buttonAdd: {
-    // flex: 1,
-    paddingRight: 16,
+    paddingRight: 8,
   },
   background: {
     position: "absolute",
@@ -51,7 +50,7 @@ const PlayerInput = ({ onAddPlayer, style = {} }) => {
       <Image
         source={images.textInput}
         style={styles.background}
-        resizeMode="cover"
+        resizeMode="contain"
       />
       <TextInput
         onChangeText={handleChangeText}

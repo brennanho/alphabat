@@ -1,11 +1,12 @@
 export type Player = {
   name: string;
-  score: number;
+  lives: number;
   icon: any;
 };
 
 export interface Assets {
   images: {
+    lives: any;
     background: {
       main: any;
     };
@@ -21,6 +22,8 @@ export interface Assets {
       };
     };
     characters: any[];
+    speaker: any;
+    beam: any;
   };
   animations: {
     timer: any;

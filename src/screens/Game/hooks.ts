@@ -12,11 +12,19 @@ function getNextPlayerIdx(players, startIndex) {
   return -1;
 }
 
-export const useGame = (playersMap: Map<string, Player>, playerToActFirst: Player) => {
+export const useGame = (
+  playersMap: Map<string, Player>,
+  playerToActFirst: Player
+) => {
   const [gameState, setGameState] = useState({
     ...INITIAL_BOARD_STATE,
     players: [...playersMap.values()].map((player: Player) => {
-      return { name: player.name, alive: true, icon: player.icon };
+      return {
+        name: player.name,
+        alive: player.lives > 0,
+        icon: player.icon,
+        lives: player.lives,
+      };
     }),
     turnIndex: [...playersMap.values()].indexOf(playerToActFirst),
     prevTurnIndex: 0,

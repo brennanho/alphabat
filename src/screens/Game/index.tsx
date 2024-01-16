@@ -33,8 +33,12 @@ const styles = StyleSheet.create({
   innerBoardBody: {
     display: "flex",
     flexDirection: "column",
-    flex: 1,
+    flex: 4,
     height: "100%",
+    width: "100%",
+  },
+  timer: {
+    flex: 1,
     width: "100%",
   },
 });
@@ -111,17 +115,18 @@ const Game = ({
       />
       {loaded.board && (
         <View style={styles.innerBoard}>
-          <Pressable>
-            
-          </Pressable>
           <AutoScaleText style={styles.category}>{category}</AutoScaleText>
           <Animated.View
             style={styles.innerBoardBody}
             entering={BounceIn.duration(500)}
           >
             <PlayersInGame players={players} playerToAct={playerToAct} />
-            <Timer ref={timerRef} onTimerEnd={handleTimerEnd} duration={15} />
           </Animated.View>
+          <Timer
+            ref={timerRef}
+            onTimerEnd={handleTimerEnd}
+            style={styles.timer}
+          />
           <ChallengeModal
             visible={paused}
             playerName={playerToContest.name}

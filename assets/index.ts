@@ -1,7 +1,7 @@
 import { Assets } from "@src/types";
 import { Asset } from "expo-asset";
 
-export const loadAssets = async (): Promise<Assets> => {
+export const loadAssets = async (): Promise<any> => {
   return {
     images: {
       background: {
@@ -11,39 +11,32 @@ export const loadAssets = async (): Promise<Assets> => {
       },
       title: await Asset.fromModule(require('./AlphaBeatTitle_Sizetest.png')).downloadAsync(),
       textInput: await Asset.fromModule(
-        require("./AlphaBeatINPUT_Sizetest.png")
+        require("./InputSizeTest.png")
       ).downloadAsync(),
       button: {
         default: await Asset.fromModule(
-          require("./AlphaBeatPLAY_Sizetest.png")
+          require("./PlayButtonSizetest.png")
         ).downloadAsync(),
         pause: {
           default: await Asset.fromModule(
             require("./pausebutton.png")
           ).downloadAsync(),
         },
-        letterTile: {
-          default: await Asset.fromModule(
-            require("./LetterBlock2.png")
-          ).downloadAsync(),
-          contestable: await Asset.fromModule(
-            require("./GREEN_O.png")
-          ).downloadAsync(),
-          pressed: await Asset.fromModule(
-            require("./RED_O.png")
-          ).downloadAsync(),
-        },
       },
+      speaker: await Asset.fromModule(require('./speaker.png')).downloadAsync(),
+      beam: await Asset.fromModule(require('./LightBeamSizeTest.png')).downloadAsync(),
       characters: [
-        await Asset.fromModule(require("./BUNBO.png")).downloadAsync(),
-        await Asset.fromModule(require("./BatJohn.png")).downloadAsync(),
-        await Asset.fromModule(require("./Catfred.png")).downloadAsync(),
-        await Asset.fromModule(require("./Blindguy.png")).downloadAsync(),
-        await Asset.fromModule(require("./COOLALA.png")).downloadAsync(),
-        await Asset.fromModule(require("./Doggone.png")).downloadAsync(),
-        await Asset.fromModule(require("./Dogkapn.png")).downloadAsync(),
-        await Asset.fromModule(require("./SaltyMammals.png")).downloadAsync(),
+        await Asset.fromModule(require("./AngryRed_Monster.png")).downloadAsync(),
+        await Asset.fromModule(require("./BlueTriEye_Monster.png")).downloadAsync(),
+        await Asset.fromModule(require("./GreenGlasses_Monster.png")).downloadAsync(),
+        await Asset.fromModule(require("./YellowCyclops_Monster.png")).downloadAsync(),
       ],
+      lives: {
+        zero: await Asset.fromModule(require("./DEAD.png")).downloadAsync(),
+        one: await Asset.fromModule(require("./LIFE_1.png")).downloadAsync(),
+        two: await Asset.fromModule(require("./LIFE_2.png")).downloadAsync(),
+        three: await Asset.fromModule(require("./LIFE_MAX.png")).downloadAsync(),
+      }
     },
     animations: {
       timer: require("./bomb_timer_1.json"),

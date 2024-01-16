@@ -1,19 +1,31 @@
 import React, { useContext } from "react";
-import { StyleSheet } from "react-native";
-import { Page, Player, Categories, AutoScaleText } from "@src/components";
+import { Image, StyleSheet, View } from "react-native";
+import {
+  Page,
+  PlayerInCategorySelection,
+  Categories,
+  AutoScaleText,
+} from "@src/components";
 import { AppContext } from "@src/store";
 import { SCORE_TO_WIN, SCREENS } from "@src/constants";
+import { Player } from "@src/types";
 
 const styles = StyleSheet.create({
-  header: { fontSize: 128, paddingLeft: 24, paddingRight: 24, marginTop: 32 },
+  page: { width: "80%", height: "100%", alignItems: "center" },
+  header: { fontSize: 128 },
+  player: { flex: 2 },
+  categories: { flex: 1 },
 });
 
 const CategorySelection = ({ navigation }) => {
   const { playerToChooseCategory, players, categories, resetGame } =
     useContext(AppContext);
   const player = players.get(playerToChooseCategory);
+  const playerHasWon =
+    [...players.values()].filter((player: Player) => player.lives > 0)
+      .length === 1;
 
-  if (player && player.score === SCORE_TO_WIN) {
+  if (playerHasWon) {
     setTimeout(() => {
       navigation.navigate(SCREENS.main);
       resetGame();
@@ -26,12 +38,15 @@ const CategorySelection = ({ navigation }) => {
 
   return (
     <Page>
-      <AutoScaleText style={styles.header}>CHOOSE CATEGORY</AutoScaleText>
-      <Player player={player} />
-      <Categories
-        categories={categories}
-        onCategoryPressed={handleCategoryPressed}
-      />
+      <View style={styles.page}>
+        <AutoScaleText style={styles.header}>CHOOSE CATEGORY</AutoScaleText>
+        <PlayerInCategorySelection player={player} style={styles.player} />
+        <Categories
+          categories={categories}
+          style={styles.categories}
+          onCategoryPressed={handleCategoryPressed}
+        />
+      </View>
     </Page>
   );
 };

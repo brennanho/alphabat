@@ -63,8 +63,8 @@ const ChallengeModal = ({
               be eliminated from this round.
             </AutoScaleText>
             <View style={styles.options}>
-              <Button onPress={onDeniedPressed}>Deny</Button>
-              <Button onPress={onAllowPressed}>Allow</Button>
+              <Button withWideBackgroundImage onPress={onDeniedPressed}>Deny</Button>
+              <Button withWideBackgroundImage onPress={onAllowPressed}>Allow</Button>
             </View>
           </View>
         </SafeAreaView>
