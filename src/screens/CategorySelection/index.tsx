@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   page: { width: "80%", height: "100%", alignItems: "center" },
   header: { fontSize: 128 },
   player: { flex: 2 },
-  categories: { flex: 1 },
+  categories: { flex: 1, marginBottom: 16 },
 });
 
 const CategorySelection = ({ navigation }) => {

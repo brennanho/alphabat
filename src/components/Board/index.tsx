@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   board: {
     position: "absolute",
     padding: 8,
-    zIndex: -1,
+    zIndex: 1,
     width: "100%",
     height: "100%",
     display: "flex",

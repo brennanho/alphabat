@@ -9,7 +9,9 @@ export const loadAssets = async (): Promise<any> => {
           require("./BG_Sizetest.png")
         ).downloadAsync(),
       },
-      title: await Asset.fromModule(require('./AlphaBeatTitle_Sizetest.png')).downloadAsync(),
+      title: await Asset.fromModule(
+        require("./AlphaBeatTitle_Sizetest.png")
+      ).downloadAsync(),
       textInput: await Asset.fromModule(
         require("./InputSizeTest.png")
       ).downloadAsync(),
@@ -23,20 +25,32 @@ export const loadAssets = async (): Promise<any> => {
           ).downloadAsync(),
         },
       },
-      speaker: await Asset.fromModule(require('./speaker.png')).downloadAsync(),
-      beam: await Asset.fromModule(require('./LightBeamSizeTest.png')).downloadAsync(),
+      speaker: await Asset.fromModule(require("./speaker.png")).downloadAsync(),
+      beam: await Asset.fromModule(
+        require("./LightBeamSizeTest.png")
+      ).downloadAsync(),
       characters: [
-        await Asset.fromModule(require("./AngryRed_Monster.png")).downloadAsync(),
-        await Asset.fromModule(require("./BlueTriEye_Monster.png")).downloadAsync(),
-        await Asset.fromModule(require("./GreenGlasses_Monster.png")).downloadAsync(),
-        await Asset.fromModule(require("./YellowCyclops_Monster.png")).downloadAsync(),
+        await Asset.fromModule(
+          require("./AngryRed_Monster.png")
+        ).downloadAsync(),
+        await Asset.fromModule(
+          require("./BlueTriEye_Monster.png")
+        ).downloadAsync(),
+        await Asset.fromModule(
+          require("./GreenGlasses_Monster.png")
+        ).downloadAsync(),
+        await Asset.fromModule(
+          require("./YellowCyclops_Monster.png")
+        ).downloadAsync(),
       ],
       lives: {
         zero: await Asset.fromModule(require("./DEAD.png")).downloadAsync(),
         one: await Asset.fromModule(require("./LIFE_1.png")).downloadAsync(),
         two: await Asset.fromModule(require("./LIFE_2.png")).downloadAsync(),
-        three: await Asset.fromModule(require("./LIFE_MAX.png")).downloadAsync(),
-      }
+        three: await Asset.fromModule(
+          require("./LIFE_MAX.png")
+        ).downloadAsync(),
+      },
     },
     animations: {
       timer: require("./bomb_timer_1.json"),

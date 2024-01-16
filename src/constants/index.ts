@@ -28,7 +28,7 @@ export const CATEGORIES = shuffle([
   "World Capitals",
   "Insects",
   "Periodic Table Elements",
-  "Programming Languages"
+  "Programming Languages",
 ]);
 
 export const MAX_PLAYERS = 4;
@@ -47,7 +47,7 @@ export const APP_CONTEXT = {
     ADD_PLAYER: "ADD_PLAYER",
     REMOVE_PLAYER: "REMOVE_PLAYER",
     SET_NEXT_ROUND: "SET_NEXT_ROUND",
-    RESET_GAME: "RESET_GAME"
+    RESET_GAME: "RESET_GAME",
   },
 };
 
@@ -60,12 +60,11 @@ export const STYLES = {
       height: 12,
     },
     shadowOpacity: 0.58,
-    shadowRadius: 16.00,
+    shadowRadius: 16.0,
     // android
-    elevation: 24, 
+    // elevation: 24,
   },
   TEXT_COLOR: "white",
   TEXT_COLOR_WHITE: "white",
-  TEXT_COLOR_PLACEHOLDER: "#6547e7"
+  TEXT_COLOR_PLACEHOLDER: "#6547e7",
 };
-

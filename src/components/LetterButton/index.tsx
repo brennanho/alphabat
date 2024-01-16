@@ -108,7 +108,7 @@ const LetterButton = ({
         <LottieView
           style={{
             ...styles.background,
-            // display: disabled && !transitioning ? "none" : "flex",
+            display: disabled && !transitioning ? "none" : "flex",
           }}
           resizeMode="cover"
           {...buttonAnimationProps}
