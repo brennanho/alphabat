@@ -53,14 +53,12 @@ export const loadAssets = async (): Promise<any> => {
       },
     },
     animations: {
-      timer: require("./bomb_timer_1.json"),
-      board: require("./DeadstateLineMoveTest.json"),
+      timer: require("./Timer.json"),
       letterTile: {
         unpressed: require("./LetterTileUnpressed.json"),
         pressed: require("./LetterTilePressed.json"),
         transition: require("./LetterTileTransition.json"),
         contestable: require("./LetterTileContestable.json"),
-        radiate: require("./DiscoMammals_Tile_PRESSED_RadiateFX.json"),
       },
     },
   };
