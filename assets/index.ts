@@ -42,6 +42,8 @@ export const loadAssets = async (): Promise<any> => {
         await Asset.fromModule(
           require("./YellowCyclops_Monster.png")
         ).downloadAsync(),
+        await Asset.fromModule(require("./SaltyMammals.png")).downloadAsync(),
+        await Asset.fromModule(require("./DEAD.png")).downloadAsync(),
       ],
       lives: {
         zero: await Asset.fromModule(require("./DEAD.png")).downloadAsync(),

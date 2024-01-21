@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/favicon.png",
     "userInterfaceStyle": "light",
+    "backgroundColor": "black",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

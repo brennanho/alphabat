@@ -46,7 +46,7 @@ export default function App() {
     <NavigationContainer
       theme={{
         ...DefaultTheme,
-        colors: { ...DefaultTheme.colors, background: "transparent" }, // Ensures background doesn't flicker when changing screens
+        colors: { ...DefaultTheme.colors, background: "black" }, // Ensures background doesn't flicker when changing screens
       }}
     >
       <StatusBar style="auto" />

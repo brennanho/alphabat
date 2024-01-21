@@ -33,9 +33,10 @@ const PlayersInGame = ({ players, playerToAct }) => {
   return (
     <View style={styles.players}>
       {Object.values(players).map((player: any) => {
-        
         const gePlayerLiveIconStyles = () => {
-          if (livePlayersCount >= 4) return { right: 8, bottom: 0 };
+          if (livePlayersCount >= 6) return { right: 20, bottom: 0 };
+          else if (livePlayersCount == 5) return { right: 16, bottom: 0 };
+          else if (livePlayersCount == 4) return { right: 8, bottom: 0 };
           else if (livePlayersCount === 3) return { right: 0, bottom: 0 };
           else if (livePlayersCount === 2) return { right: 0, bottom: 24 };
           else return { right: 0, bottom: 90 };

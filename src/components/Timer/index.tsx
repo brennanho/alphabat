@@ -4,11 +4,13 @@ import React, {
   useRef,
   forwardRef,
   useContext,
+  memo,
 } from "react";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { STYLES } from "@src/constants";
 import LottieView from "lottie-react-native";
 import { AppContext } from "@src/store";
+import { Device } from "@src/types";
 
 const styles = StyleSheet.create({
   timer: {
@@ -40,8 +42,11 @@ export const useTimer = () => {
         setPaused(false);
       },
       reset: () => {
-        ref.current.reset();
-        ref.current.play();
+        if (Platform.OS === Device.Android) ref.current.play(0);
+        else if (Platform.OS === Device.IOS) {
+          ref.current.reset();
+          ref.current.play();
+        }
         setPaused(false);
       },
       play: () => {
@@ -67,7 +72,9 @@ const Timer = forwardRef(
     } = useContext(AppContext);
 
     const handleTimerEnd = (isCancelled: boolean) => {
-      if (!isCancelled) onTimerEnd();
+      if (!isCancelled) {
+        onTimerEnd();
+      }
     };
 
     return (
@@ -76,9 +83,9 @@ const Timer = forwardRef(
         onAnimationFinish={handleTimerEnd}
         source={animations.timer}
         duration={duration * 1000}
-        loop={false}
         style={{ ...styles.timer, ...style }}
         resizeMode="contain"
+        loop={false}
       />
     );
   }

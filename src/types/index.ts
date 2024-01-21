@@ -31,3 +31,8 @@ export interface Assets {
     board: any;
   };
 }
+
+export enum Device {
+  IOS = "ios",
+  Android = "android",
+}

@@ -78,8 +78,8 @@ const Game = ({
   }, [loaded]);
 
   function handleTimerEnd() {
-    killCurrentPlayer();
-    reset();
+    // killCurrentPlayer();
+    // reset();
   }
 
   function handleLetterPressed(letter: string) {

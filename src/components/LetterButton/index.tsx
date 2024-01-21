@@ -1,5 +1,5 @@
 import React, { memo, useContext, useEffect, useState } from "react";
-import { Pressable, StyleSheet, Image } from "react-native";
+import { Pressable, StyleSheet, Image, Platform } from "react-native";
 import Animated, {
   useSharedValue,
   withTiming,
@@ -14,16 +14,22 @@ import { STYLES } from "@src/constants";
 import { FONTS } from "@assets/index";
 import AutoScaleText from "../AutoScaleText";
 import { AppContext } from "@src/store";
+import { Device } from "@src/types";
 
 const styles = StyleSheet.create({
-  button: {
+  buttonWrapper: {
     position: "relative",
+    height: "100%",
+    backgroundColor: "transparent",
+    flex: 1,
+    ...STYLES.ELEVATION,
+  },
+  button: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     height: "100%",
-    backgroundColor: "transparent",
-    ...STYLES.ELEVATION,
+    width: "100%",
   },
   background: {
     top: 0,
@@ -35,8 +41,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: FONTS.REGULAR.NAME,
     color: "white",
-    fontSize: 128,
-    padding: 12,
+    fontSize: 48,
   },
 });
 
@@ -60,6 +65,7 @@ const LetterButton = ({
   );
   const exitingAnimation = FlipOutEasyX.duration(3000);
   const [transitioning, setTransitioning] = useState(false);
+  const [androidStartedAnimation, setAndroidStartedAnimation] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -73,16 +79,25 @@ const LetterButton = ({
   };
 
   let buttonAnimationProps;
-  if (transitioning)
+  if (transitioning) {
     buttonAnimationProps = {
       source: letterTile.transition,
-      onAnimationFinish: (isCancelled) => {
-        if (!isCancelled) setTransitioning(false);
+      onAnimationFinish: (isCancelled: boolean) => {
+        if (!isCancelled) {
+          if (Platform.OS === Device.IOS) setTransitioning(false);
+          // Android specific issue where onAnimationFinish triggers immediately when rendered
+          else if (Platform.OS === Device.Android) {
+            if (androidStartedAnimation) {
+              setTransitioning(false);
+              setAndroidStartedAnimation(false);
+            } else setAndroidStartedAnimation(true);
+          }
+        }
       },
       autoPlay: true,
       loop: false,
     };
-  else if (contestable)
+  } else if (contestable)
     buttonAnimationProps = {
       source: letterTile.contestable,
       autoPlay: true,
@@ -94,22 +109,22 @@ const LetterButton = ({
       autoPlay: true,
       loop: true,
     };
-
   return (
-    <Animated.View exiting={exitingAnimation} entering={enteringAnimation}>
+    <Animated.View
+      style={{ ...styles.buttonWrapper, ...style }}
+      exiting={exitingAnimation}
+      entering={enteringAnimation}
+    >
       <Pressable
         onPressIn={handlePress}
         disabled={disabled}
-        style={{
-          ...styles.button,
-          ...style,
-        }}
+        style={styles.button}
       >
         <LottieView
           style={{
             ...styles.background,
           }}
-          resizeMode="cover"
+          resizeMode="contain"
           {...buttonAnimationProps}
         ></LottieView>
         {/* {contestable && (

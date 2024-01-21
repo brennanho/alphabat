@@ -8,27 +8,27 @@ import { AppContext } from "@src/store";
 const styles = StyleSheet.create({
   board: {
     position: "absolute",
-    padding: 8,
+    top: 0,
+    left: 0,
     zIndex: 1,
     width: "100%",
     height: "100%",
     display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "space-between",
-    alignSelf: "auto",
+    padding: 8,
+    paddingTop: 24,
+    rowGap: 16,
   },
   row: {
-    height: "10%",
+    flex: 1,
     width: "100%",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    columnGap: 8,
   },
-  tile: {
-    minWidth: "19%",
-    height: "100%",
+  columnFiller: {
+    flex: 3,
   },
 });
 
@@ -67,9 +67,12 @@ const Board = ({
                 });
               };
 
+              if (!letter) {
+                return <View style={styles.columnFiller} />;
+              }
+
               return (
                 <LetterButton
-                  style={styles.tile}
                   key={`${id}-${letter}-${letterIdx}`}
                   disabled={
                     tiles[letter].pressed && contestableLetter !== letter
