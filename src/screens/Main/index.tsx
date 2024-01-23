@@ -1,6 +1,25 @@
 import React, { useContext } from "react";
-import { StyleSheet, View, Image } from "react-native";
-import { Page, PlayerInput, PlayersInMain, Button } from "@src/components";
+import {
+  StyleSheet,
+  View,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+import Animated, {
+  FadeInDown,
+  FadeInUp,
+  FadeOutDown,
+  JumpingTransition,
+} from "react-native-reanimated";
+import {
+  Page,
+  PlayerInput,
+  PlayersInMain,
+  Button,
+  AutoScaleText,
+} from "@src/components";
+import { useKeyboard } from "@react-native-community/hooks";
 import { AppContext } from "@src/store";
 import { SCREENS, STYLES } from "@src/constants";
 
@@ -14,6 +33,7 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+  players: { display: "flex", flexDirection: "row", height: "50%" },
   playerInput: {
     flex: 1,
   },
@@ -34,7 +54,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
-    gap: 4
+    gap: 4,
   },
   input: {
     display: "flex",
@@ -46,7 +66,7 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     paddingTop: 8,
-    paddingBottom: 16
+    paddingBottom: 16,
   },
   speakerLeft: {
     flex: 1,
@@ -82,9 +102,7 @@ const Main = ({ navigation }) => {
             resizeMode="contain"
             style={styles.title}
           />
-          <View
-            style={{ display: "flex", flexDirection: "row", height: "50%" }}
-          >
+          <View style={styles.players}>
             <Image
               source={assets.images.beam}
               style={styles.beam}

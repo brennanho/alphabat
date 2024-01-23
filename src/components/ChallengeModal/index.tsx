@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
   },
+  playerIcon: { width: 24, height: 24 },
   message: {
     fontFamily: FONTS.REGULAR.NAME,
     color: STYLES.TEXT_COLOR_WHITE,
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
 
 const ChallengeModal = ({
   visible,
-  playerName,
+  player,
   onDeniedPressed,
   onAllowPressed,
 }) => {
@@ -59,12 +60,22 @@ const ChallengeModal = ({
               resizeMode="cover"
             />
             <AutoScaleText style={styles.message} lines={3}>
-              Allow {playerName}'s answer? If you select DENY, {playerName} will
-              be eliminated from this round.
+              Allow {player.name}'s{" "}
+              <Image
+                style={styles.playerIcon}
+                resizeMode="contain"
+                source={player.icon}
+              />{" "}
+              answer? If you select DENY, {player.name} will be eliminated from
+              this round.
             </AutoScaleText>
             <View style={styles.options}>
-              <Button withWideBackgroundImage onPress={onDeniedPressed}>Deny</Button>
-              <Button withWideBackgroundImage onPress={onAllowPressed}>Allow</Button>
+              <Button withWideBackgroundImage onPress={onDeniedPressed}>
+                Deny
+              </Button>
+              <Button withWideBackgroundImage onPress={onAllowPressed}>
+                Allow
+              </Button>
             </View>
           </View>
         </SafeAreaView>

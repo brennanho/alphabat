@@ -78,8 +78,8 @@ const Game = ({
   }, [loaded]);
 
   function handleTimerEnd() {
-    // killCurrentPlayer();
-    // reset();
+    killCurrentPlayer();
+    reset();
   }
 
   function handleLetterPressed(letter: string) {
@@ -129,7 +129,7 @@ const Game = ({
           />
           <ChallengeModal
             visible={paused}
-            playerName={playerToContest.name}
+            player={playerToContest}
             onAllowPressed={handleAllowPressed}
             onDeniedPressed={handleDeniedPressed}
           />

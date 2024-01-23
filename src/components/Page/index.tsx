@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
   page: {
     height: Dimensions.get("window").height,
     width: Dimensions.get("window").width,
-    position: "relative",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -27,11 +26,7 @@ const Page = ({ children }) => {
     assets: { images },
   } = useContext(AppContext);
   return (
-    <ImageBackground
-      source={images.background.main}
-      resizeMode="cover"
-      style={{ backgroundColor: "transparent" }}
-    >
+    <ImageBackground source={images.background.main} resizeMode="cover">
       <SafeAreaView style={styles.page}>{children}</SafeAreaView>
     </ImageBackground>
   );

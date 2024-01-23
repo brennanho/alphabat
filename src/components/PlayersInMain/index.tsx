@@ -65,9 +65,9 @@ const PlayersInMain = ({
           <Animated.View
             style={styles.player}
             key={player.name}
-            layout={JumpingTransition.duration(1000)}
-            entering={SlideInRight.duration(1000)}
-            exiting={SlideOutRight.duration(1000)}
+            layout={JumpingTransition.duration(500)}
+            entering={SlideInRight.duration(500)}
+            exiting={SlideOutRight.duration(500)}
           >
             <Image
               style={styles.playerIcon}
