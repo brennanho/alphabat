@@ -1,7 +1,14 @@
 import React, { useContext } from "react";
 import { AutoScaleText, Button } from "@src/components";
 import { STYLES } from "@src/constants";
-import { StyleSheet, Modal, SafeAreaView, View, Image } from "react-native";
+import {
+  StyleSheet,
+  Modal,
+  SafeAreaView,
+  View,
+  Image,
+  ImageBackground,
+} from "react-native";
 import { BlurView } from "expo-blur";
 import { FONTS } from "@assets/index";
 import { AppContext } from "@src/store";
@@ -16,7 +23,9 @@ const styles = StyleSheet.create({
   },
   content: {
     position: "relative",
-    width: "90%",
+    paddingBottom: 32,
+    paddingTop: 16,
+    margin: 16,
     ...STYLES.ELEVATION,
   },
   options: {
@@ -25,17 +34,12 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
   },
-  playerIcon: { width: 24, height: 24 },
+  playerIcon: { width: 32, height: 32, position: "absolute", top: 8, right: 8  },
   message: {
     fontFamily: FONTS.REGULAR.NAME,
     color: STYLES.TEXT_COLOR_WHITE,
     fontSize: 128,
     padding: 24,
-  },
-  background: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
   },
 });
 
@@ -53,21 +57,19 @@ const ChallengeModal = ({
     <Modal visible={visible} animationType="slide" transparent>
       <BlurView>
         <SafeAreaView style={styles.container}>
-          <View style={styles.content}>
+          <ImageBackground
+            source={images.background.main}
+            style={styles.content}
+            resizeMode="cover"
+          >
             <Image
-              source={images.background.main}
-              style={styles.background}
-              resizeMode="cover"
+              style={styles.playerIcon}
+              resizeMode="contain"
+              source={player.icon}
             />
             <AutoScaleText style={styles.message} lines={3}>
-              Allow {player.name}'s{" "}
-              <Image
-                style={styles.playerIcon}
-                resizeMode="contain"
-                source={player.icon}
-              />{" "}
-              answer? If you select DENY, {player.name} will be eliminated from
-              this round.
+              Allow {player.name}'s answer? If you select DENY, {player.name}
+              will be eliminated from this round.
             </AutoScaleText>
             <View style={styles.options}>
               <Button withWideBackgroundImage onPress={onDeniedPressed}>
@@ -77,7 +79,7 @@ const ChallengeModal = ({
                 Allow
               </Button>
             </View>
-          </View>
+          </ImageBackground>
         </SafeAreaView>
       </BlurView>
     </Modal>

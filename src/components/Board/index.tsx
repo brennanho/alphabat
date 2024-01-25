@@ -4,6 +4,7 @@ import { LetterButton } from "@src/components";
 import { BOARD } from "./constants";
 import { TOTAL_LETTER_COUNT } from "@src/constants";
 import { AppContext } from "@src/store";
+import Constants from "expo-constants";
 
 const styles = StyleSheet.create({
   board: {
@@ -11,11 +12,11 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     zIndex: 1,
+    marginTop: Constants.statusBarHeight,
     width: "100%",
     height: "100%",
     display: "flex",
     padding: 8,
-    paddingTop: 24,
     rowGap: 16,
   },
   row: {

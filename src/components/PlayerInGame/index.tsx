@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   iconsWrapper: {
     height: "100%",
-    width: "50%",
+    width: "40%",
     position: "relative",
   },
   playerIcon: {

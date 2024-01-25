@@ -24,7 +24,7 @@ import { AppContext } from "@src/store";
 import { SCREENS, STYLES } from "@src/constants";
 
 const styles = StyleSheet.create({
-  title: { width: "95%", ...STYLES.ELEVATION },
+  title: { width: "95%", flex: 1, ...STYLES.ELEVATION },
   main: {
     display: "flex",
     flexDirection: "column",
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-  players: { display: "flex", flexDirection: "row", height: "50%" },
+  players: { display: "flex", flexDirection: "row", flex: 2 },
   playerInput: {
     flex: 1,
   },
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   startGameText: {
-    fontSize: 48,
+    fontSize: 44,
   },
   beam: {
     height: "120%",
@@ -133,6 +133,7 @@ const Main = ({ navigation }) => {
                 style={styles.startGameButton}
                 textStyles={styles.startGameText}
                 disabled={startGameDisabled}
+                // withWideBackgroundImage
                 onPress={handleNavigation}
               >
                 PLAY

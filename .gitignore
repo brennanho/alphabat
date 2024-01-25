@@ -37,3 +37,4 @@ yarn-error.*
 # Other
 .npmrc
 yarn.lock
+package-lock.json
