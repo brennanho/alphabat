@@ -13,7 +13,7 @@ import { FONTS } from "@assets/index";
 const styles = StyleSheet.create({
   playersInMain: {
     width: "100%",
-    flex: 1,
+    gap: 12,
     ...STYLES.ELEVATION,
   },
   player: {
@@ -51,14 +51,16 @@ const styles = StyleSheet.create({
 interface PlayersListProps {
   players: Map<string, Player>;
   onRemovePlayer: (playerName: string) => void;
+  style: Object;
 }
 
 const PlayersInMain = ({
   players,
   onRemovePlayer = (playerName) => null,
+  style = {},
 }: PlayersListProps) => {
   return (
-    <View style={styles.playersInMain}>
+    <View style={{...styles.playersInMain, ...style}}>
       {Array.from(players).map(([, player]) => {
         const handlePress = () => onRemovePlayer(player.name);
         return (

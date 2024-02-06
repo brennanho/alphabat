@@ -29,6 +29,9 @@ export interface Assets {
     timer: any;
     letterTile: any;
     board: any;
+    title: any;
+    beam: any;
+    speaker: any;
   };
 }
 

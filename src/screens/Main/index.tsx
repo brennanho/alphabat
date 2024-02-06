@@ -1,30 +1,14 @@
 import React, { useContext } from "react";
-import {
-  StyleSheet,
-  View,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
-import Animated, {
-  FadeInDown,
-  FadeInUp,
-  FadeOutDown,
-  JumpingTransition,
-} from "react-native-reanimated";
-import {
-  Page,
-  PlayerInput,
-  PlayersInMain,
-  Button,
-  AutoScaleText,
-} from "@src/components";
+import { StyleSheet, View, Image, KeyboardAvoidingView, Platform } from "react-native";
+import LottieView from "lottie-react-native";
+import Animated, { FadeInDown, FadeInUp, FadeOutDown, JumpingTransition } from "react-native-reanimated";
+import { Page, PlayerInput, PlayersInMain, Button, AutoScaleText } from "@src/components";
 import { useKeyboard } from "@react-native-community/hooks";
 import { AppContext } from "@src/store";
 import { SCREENS, STYLES } from "@src/constants";
 
 const styles = StyleSheet.create({
-  title: { width: "95%", flex: 1, ...STYLES.ELEVATION },
+  title: { width: "100%", flex: 1, ...STYLES.ELEVATION },
   main: {
     display: "flex",
     flexDirection: "column",
@@ -33,7 +17,8 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-  players: { display: "flex", flexDirection: "row", flex: 2 },
+  playersContainer: { display: "flex", flexDirection: "row", flex: 2 },
+  players: { flex: 3 },
   playerInput: {
     flex: 1,
   },
@@ -45,6 +30,7 @@ const styles = StyleSheet.create({
   },
   beam: {
     height: "120%",
+    flex: 1,
   },
   footer: {
     display: "flex",
@@ -70,16 +56,19 @@ const styles = StyleSheet.create({
   },
   speakerLeft: {
     flex: 1,
+    height: "100%",
   },
   speakerRight: {
     transform: [{ scaleX: -1 }],
     flex: 1,
+    height: "100%",
   },
 });
 
 const Main = ({ navigation }) => {
   const { players, addPlayer, removePlayer, assets } = useContext(AppContext);
   const startGameDisabled = players.size <= 1;
+  const animationSpeed = 0.75;
 
   const handleAddPlayer = (playerName: string) => {
     addPlayer(playerName);
@@ -97,38 +86,16 @@ const Main = ({ navigation }) => {
     <>
       <Page>
         <View style={styles.main}>
-          <Image
-            source={assets.images.title}
-            resizeMode="contain"
-            style={styles.title}
-          />
-          <View style={styles.players}>
-            <Image
-              source={assets.images.beam}
-              style={styles.beam}
-              resizeMode="contain"
-            />
-            <PlayersInMain
-              players={players}
-              onRemovePlayer={handleRemovePlayer}
-            />
-            <Image
-              source={assets.images.beam}
-              style={styles.beam}
-              resizeMode="contain"
-            />
+          <LottieView source={assets.animations.title} resizeMode="contain" style={styles.title} autoPlay speed={animationSpeed} />
+          <View style={styles.playersContainer}>
+            <LottieView source={assets.animations.beam} style={styles.beam} resizeMode="contain" autoPlay speed={animationSpeed} />
+            <PlayersInMain style={styles.players} players={players} onRemovePlayer={handleRemovePlayer} />
+            <LottieView source={assets.animations.beam} style={styles.beam} resizeMode="contain" autoPlay speed={animationSpeed} />
           </View>
           <View style={styles.footer}>
-            <Image
-              source={assets.images.speaker}
-              style={styles.speakerLeft}
-              resizeMode="contain"
-            />
+            <LottieView source={assets.animations.speaker} style={styles.speakerLeft} resizeMode="contain" autoPlay speed={animationSpeed} />
             <View style={styles.input}>
-              <PlayerInput
-                style={styles.playerInput}
-                onAddPlayer={handleAddPlayer}
-              />
+              <PlayerInput style={styles.playerInput} onAddPlayer={handleAddPlayer} />
               <Button
                 style={styles.startGameButton}
                 textStyles={styles.startGameText}
@@ -139,11 +106,7 @@ const Main = ({ navigation }) => {
                 PLAY
               </Button>
             </View>
-            <Image
-              source={assets.images.speaker}
-              resizeMode="contain"
-              style={styles.speakerRight}
-            />
+            <LottieView source={assets.animations.speaker} resizeMode="contain" style={styles.speakerRight} autoPlay  speed={animationSpeed}/>
           </View>
         </View>
       </Page>
