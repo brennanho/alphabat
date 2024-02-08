@@ -1,10 +1,11 @@
 import React, { useId, useState, useEffect, useContext } from "react";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { LetterButton } from "@src/components";
 import { BOARD } from "./constants";
 import { TOTAL_LETTER_COUNT } from "@src/constants";
 import { AppContext } from "@src/store";
 import Constants from "expo-constants";
+import { Device } from "@src/types";
 
 const styles = StyleSheet.create({
   board: {
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     zIndex: 1,
-    marginTop: Constants.statusBarHeight,
+    marginTop: Platform.OS === Device.IOS ? Constants.statusBarHeight : 0,
     width: "100%",
     height: "100%",
     display: "flex",

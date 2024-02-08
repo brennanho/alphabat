@@ -63,8 +63,14 @@ export const loadAssets = async (): Promise<any> => {
         contestable: require("./LetterTileContestable.json"),
       },
       title: require("./AlphaBeatTitle.json"),
+      titleBackground: require("./TitleLightArch.json"),
       beam: require("./UltraLightBeam.json"),
-      speaker: require("./Speaker.json")
+      speaker: require("./Speaker.json"),
+      character: {
+        life1: require("./LIFE_1HP.json"),
+        life2: require("./LIFE_2HP.json"),
+        life3: require("./LIFE_FULL.json"),
+      }
     },
   };
 };

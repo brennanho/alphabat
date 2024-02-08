@@ -30,8 +30,14 @@ export interface Assets {
     letterTile: any;
     board: any;
     title: any;
+    titleBackground: any;
     beam: any;
     speaker: any;
+    character: {
+      life1: any;
+      life2: any;
+      life3: any;
+    }
   };
 }
 

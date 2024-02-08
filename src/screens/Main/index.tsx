@@ -8,7 +8,9 @@ import { AppContext } from "@src/store";
 import { SCREENS, STYLES } from "@src/constants";
 
 const styles = StyleSheet.create({
-  title: { width: "100%", flex: 1, ...STYLES.ELEVATION },
+  titleWrapper: { width: "100%", flex: 1, ...STYLES.ELEVATION },
+  title: {  position: "absolute", width: "100%", height: "100%", top: 0 },
+  titleBackground: { position: "absolute", width: "100%", height: "100%", top: 0 },
   main: {
     display: "flex",
     flexDirection: "column",
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
 const Main = ({ navigation }) => {
   const { players, addPlayer, removePlayer, assets } = useContext(AppContext);
   const startGameDisabled = players.size <= 1;
-  const animationSpeed = 0.75;
+  const animationSpeed = 0.8;
 
   const handleAddPlayer = (playerName: string) => {
     addPlayer(playerName);
@@ -86,14 +88,47 @@ const Main = ({ navigation }) => {
     <>
       <Page>
         <View style={styles.main}>
-          <LottieView source={assets.animations.title} resizeMode="contain" style={styles.title} autoPlay speed={animationSpeed} />
+          <View style={styles.titleWrapper}>
+            <LottieView
+              source={assets.animations.titleBackground}
+              resizeMode="contain"
+              style={styles.titleBackground}
+              speed={animationSpeed}
+              autoPlay
+            />
+            <LottieView
+              source={assets.animations.title}
+              resizeMode="contain"
+              style={styles.title}
+              autoPlay
+              speed={animationSpeed}
+            />
+          </View>
           <View style={styles.playersContainer}>
-            <LottieView source={assets.animations.beam} style={styles.beam} resizeMode="contain" autoPlay speed={animationSpeed} />
+            <LottieView
+              source={assets.animations.beam}
+              style={styles.beam}
+              resizeMode="contain"
+              autoPlay
+              speed={animationSpeed}
+            />
             <PlayersInMain style={styles.players} players={players} onRemovePlayer={handleRemovePlayer} />
-            <LottieView source={assets.animations.beam} style={styles.beam} resizeMode="contain" autoPlay speed={animationSpeed} />
+            <LottieView
+              source={assets.animations.beam}
+              style={styles.beam}
+              resizeMode="contain"
+              autoPlay
+              speed={animationSpeed}
+            />
           </View>
           <View style={styles.footer}>
-            <LottieView source={assets.animations.speaker} style={styles.speakerLeft} resizeMode="contain" autoPlay speed={animationSpeed} />
+            <LottieView
+              source={assets.animations.speaker}
+              style={styles.speakerLeft}
+              resizeMode="contain"
+              autoPlay
+              speed={animationSpeed}
+            />
             <View style={styles.input}>
               <PlayerInput style={styles.playerInput} onAddPlayer={handleAddPlayer} />
               <Button
@@ -106,7 +141,13 @@ const Main = ({ navigation }) => {
                 PLAY
               </Button>
             </View>
-            <LottieView source={assets.animations.speaker} resizeMode="contain" style={styles.speakerRight} autoPlay  speed={animationSpeed}/>
+            <LottieView
+              source={assets.animations.speaker}
+              resizeMode="contain"
+              style={styles.speakerRight}
+              autoPlay
+              speed={animationSpeed}
+            />
           </View>
         </View>
       </Page>

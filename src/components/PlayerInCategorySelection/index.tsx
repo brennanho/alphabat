@@ -2,6 +2,7 @@ import { AppContext } from "@src/store";
 import React from "react";
 import { useContext } from "react";
 import { View, Image, StyleSheet } from "react-native";
+import LottieView from "lottie-react-native";
 import AutoScaleText from "../AutoScaleText";
 import { FONTS } from "@assets/index";
 import { STYLES } from "@src/constants";
@@ -19,13 +20,13 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
-    height: "10%"
+    gap: 12,
+    height: "10%",
   },
   livesIcon: {
-    bottom: 0,
-    left: 0,
-    width: 64,
+    width: undefined,
+    height: "100%",
+    aspectRatio: 1,
   },
   playerText: {
     fontSize: 32,
@@ -37,27 +38,20 @@ const styles = StyleSheet.create({
 
 const PlayerInCategorySelection = ({ player, style = {} }) => {
   const {
-    assets: { images },
+    assets: { animations },
   } = useContext(AppContext);
   const livesIconMap = {
-    "1": images.lives.one,
-    "2": images.lives.two,
-    "3": images.lives.three,
+    "0": animations.character.life1,
+    "1": animations.character.life1,
+    "2": animations.character.life2,
+    "3": animations.character.life3,
   };
   return (
     <View style={{ ...styles.player, ...style }}>
-      <Image
-        source={player.icon}
-        style={styles.playerIcon}
-        resizeMode="contain"
-      />
+      <Image source={player.icon} style={styles.playerIcon} resizeMode="contain" />
       <View style={styles.playerName}>
-        <Image
-          source={livesIconMap[player.lives]}
-          style={styles.livesIcon}
-          resizeMode="contain"
-        />
-        <AutoScaleText style={{ ...styles.playerText }} lines={3}>
+        <LottieView source={livesIconMap[player.lives]} style={styles.livesIcon} resizeMode="contain" autoPlay />
+        <AutoScaleText style={styles.playerText} lines={3}>
           {player.name}
         </AutoScaleText>
       </View>

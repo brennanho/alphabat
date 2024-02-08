@@ -2,6 +2,7 @@ import { AppContext } from "@src/store";
 import React from "react";
 import { useContext } from "react";
 import { View, Image, StyleSheet } from "react-native";
+import LottieView from "lottie-react-native";
 import * as Animatable from "react-native-animatable";
 import AutoScaleText from "../AutoScaleText";
 import { FONTS } from "@assets/index";
@@ -44,14 +45,14 @@ const styles = StyleSheet.create({
 
 const PlayerInGame = ({ player, isTurn, style = {}, liveIconStyle = {} }) => {
   const {
-    assets: { images },
+    assets: { animations },
   } = useContext(AppContext);
 
   const livesIconMap = {
-    "0": images.lives.zero,
-    "1": images.lives.one,
-    "2": images.lives.two,
-    "3": images.lives.three,
+    "0": animations.character.life1,
+    "1": animations.character.life1,
+    "2": animations.character.life2,
+    "3": animations.character.life3,
   };
 
   return (
@@ -65,13 +66,11 @@ const PlayerInGame = ({ player, isTurn, style = {}, liveIconStyle = {} }) => {
           easing="ease-out"
           iterationCount="infinite"
         />
-        <Animatable.Image
+        <LottieView
           source={livesIconMap[player.lives]}
           style={{ ...styles.livesIcon, ...liveIconStyle }}
           resizeMode="contain"
-          animation={isTurn ? "tada" : ""}
-          easing="ease-out"
-          iterationCount="infinite"
+          autoPlay
         />
       </View>
       <AutoScaleText style={styles.playerText}>{player.name}</AutoScaleText>
